@@ -1,0 +1,53 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <style name="QuizTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/red</item>
+        <item name="colorPrimaryDark">@color/red</item>
+        <item name="colorAccent">@color/red</item>
+        <item name="android:statusBarColor" tools:targetApi="lollipop">@color/red</item>
+
+    </style>
+
+    <style name="DDLTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/pink</item>
+        <item name="colorPrimaryDark">@color/pink</item>
+        <item name="colorAccent">@color/pink</item>
+        <item name="android:statusBarColor" tools:targetApi="lollipop">@color/pink</item>
+    </style>
+
+    <style name="DMLTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/pulm</item>
+        <item name="colorPrimaryDark">@color/pulm</item>
+        <item name="colorAccent">@color/pulm</item>
+        <item name="android:statusBarColor" tools:targetApi="lollipop">@color/pulm</item>
+    </style>
+
+    <style name="AfTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/seaGreen</item>
+        <item name="colorPrimaryDark">@color/seaGreen</item>
+        <item name="colorAccent">@color/seaGreen</item>
+        <item name="android:statusBarColor" tools:targetApi="lollipop">@color/seaGreen</item>
+    </style>
+
+    <style name="AcfTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/peach</item>
+        <item name="colorPrimaryDark">@color/peach</item>
+        <item name="colorAccent">@color/peach</item>
+        <item name="android:statusBarColor" tools:targetApi="lollipop">@color/peach</item>
+    </style>
+
+
+</resources>

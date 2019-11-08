@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+<h1 class="qa_title">Aggregate Functions in DBMS</h1>
+<p>Aggregate functions in DBMS take multiple rows from the table and return a value according to the query.</p>
+<p>All the aggregate functions are used in Select statement.</p><p>Syntax:&nbsp;</p>
+<p>SELECT &lt;FUNCTION NAME&gt; (&lt;PARAMETER&gt;) FROM &lt;TABLE NAME&gt;</p>
+<h4>AVG Function</h4>
+<p>This function returns the average value of the numeric column that is supplied as a parameter.</p
+><p>Example: Write a query to select average salary from employee table.</p>
+<pre>Select AVG(salary) from Employee</pre><h4>COUNT Function</h4>
+<p>The count function returns the number of rows in the result. It does not count the null values.</p>
+<p>Example: Write a query to return number of rows where salary &gt; 20000.</p><p>Select COUNT(*) from Employee where Salary &gt; 20000;</p>
+<p>Types:</p><ol><li dir="ltr"><p>COUNT(*): Counts all the number of rows of the table including null.</p></li><li dir="ltr"><p>COUNT( COLUMN_NAME): count number of non-null values in column.</p></li><li dir="ltr"><p>COUNT( DISTINCT COLUMN_NAME): count number of distinct values in a column.</p></li></ol><h4>MAX Function</h4><p>The MAX function is used to find maximum value in the column that is supplied as a parameter. It can be used on any type of data.</p><p>Example: Write a query to find the maximum salary in employee table.</p><pre>Select MAX(salary) from Employee</pre><h4>SUM Function</h4><p>This function sums up the values in the column supplied as a parameter.</p><p>Example: Write a query to get the total salary of employees.</p><pre>Select SUM(salary) from Employee</pre><h4>STDDEV Function</h4><p>The STDDEV function is used to find standard deviation of the column specified as argument.</p><p>Example: Write a query to find standard deviation of salary in Employee table.</p><pre>Select STDDEV(salary) from Employee</pre><h4>VARIANCE Function</h4><p>The VARIANCE Function is used to find variance of the column specified as argument.</p><p>Example:</p><pre>Select VARIANCE(salary) from Employee</pre>
+<div class="clear"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Tutorial Content Ends Here -->
+</body>
+</html>

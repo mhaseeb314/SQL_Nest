@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3A559F</color>
+    <color name="colorPrimaryDark">#3A559F</color>
+    <color name="colorAccent">#3A559F</color>
+
+    <color name="blue">#3A559F</color>
+    <color name="red">#D54E41</color>
+    <color name="colorWhite">#FEFEFE</color>
+    <color name="purple">#BA55D3</color>
+    <color name="drakCyan">#416D6D</color>
+    <color name="green">#84AF28</color>
+    <color name="pink">#DB7093</color>
+    <color name="maroon">#660000</color>
+    <color name="peach">#F5CFAB</color>
+    <color name="salmon">#FA8072</color>
+    <color name="seaGreen">#20B2AA</color>
+    <color name="marine">#7FFFD4</color>
+    <color name="pulm">#DDA0DD</color>
+
+
+</resources>

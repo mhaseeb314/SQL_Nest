@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+<div class="mui-col-md-6 tutorial-content">
+<h1>SQL Overview</h1>
+<hr>
+<p>SQL is a programming language for Relational Databases. It is designed over relational algebra and tuple relational calculus. SQL comes as a package with all major distributions of RDBMS.</p>
+<p>SQL comprises both data definition and data manipulation languages. Using the data definition properties of SQL, one can design and modify database schema, whereas data manipulation properties allows SQL to store and retrieve data from database.</p>
+<h2>Data Definition Language</h2>
+<p>SQL uses the following set of commands to define database schema −</p>
+<h3>CREATE</h3>
+<p>Creates new databases, tables and views from RDBMS.</p>
+<p><b>For example</b> −</p>
+<pre class="result notranslate">Create database tutorialspoint;
+Create table article;
+Create view for_students;
+</pre>
+<h3>DROP</h3>
+<p>Drops commands, views, tables, and databases from RDBMS.</p>
+<p><b>For example</b>−</p>
+<pre class="result notranslate">Drop object_type object_name;
+Drop database tutorialspoint;
+Drop table article;
+Drop view for_students;
+</pre>
+<h3>ALTER</h3>
+<p>Modifies database schema.</p>
+<pre class="result notranslate">Alter object_type object_name parameters;
+</pre>
+<p><b>For example</b>−</p>
+<pre class="result notranslate">Alter table article add subject varchar;
+</pre>
+<p>This command adds an attribute in the relation <b>article</b> with the name <b>subject</b> of string type.</p>
+<h2>Data Manipulation Language</h2>
+<p>SQL is equipped with data manipulation language (DML). DML modifies the database instance by inserting, updating and deleting its data. DML is responsible for all forms data modification in a database. SQL contains the following set of commands in its DML section −</p>
+<ul class="list">
+<li>SELECT/FROM/WHERE</li>
+<li>INSERT INTO/VALUES</li>
+<li>UPDATE/SET/WHERE</li>
+<li>DELETE FROM/WHERE</li>
+</ul>
+<p>These basic constructs allow database programmers and users to enter data and information into the database and retrieve efficiently using a number of filter options.</p>
+<h3>SELECT/FROM/WHERE</h3>
+<ul class="list">
+<li><p><b>SELECT</b> − This is one of the fundamental query command of SQL. It is similar to the projection operation of relational algebra. It selects the attributes based on the condition described by WHERE clause.</p></li>
+<li><p><b>FROM</b> − This clause takes a relation name as an argument from which attributes are to be selected/projected. In case more than one relation names are given, this clause corresponds to Cartesian product.</p></li>
+<li><p><b>WHERE</b> − This clause defines predicate or conditions, which must match in order to qualify the attributes to be projected.</p></li>
+</ul>
+<p><b>For example</b> −</p>
+<pre class="result notranslate">Select author_name
+From book_author
+Where age &gt; 50;
+</pre>
+<p>This command will yield the names of authors from the relation <b>book_author</b> whose age is greater than 50.</p>
+<h3>INSERT INTO/VALUES</h3>
+<p>This command is used for inserting values into the rows of a table (relation).</p>
+<p><b>Syntax</b>−</p>
+<p class="result notranslate">INSERT INTO table
+    (column1 [, column2, column3 ... ]) VALUES (value1 [, value2, value3 ... ])
+</p>
+<p>Or</p>
+<p class="result notranslate">INSERT INTO table VALUES (value1, [value2, ... ])
+</p>
+<p><b>For example</b> −</p>
+<p class="result notranslate">INSERT INTO tutorialspoint (Author, Subject) VALUES ("anonymous", "computers");
+</p>
+<h3>UPDATE/SET/WHERE</h3>
+<p>This command is used for updating or modifying the values of columns in a table (relation).</p>
+<p><b>Syntax</b> −</p>
+<p class="result notranslate">UPDATE table_name SET column_name = value [, column_name = value ...] [WHERE condition]
+</p>
+<p><b>For example</b> −</p>
+<p class="result notranslate">UPDATE tutorialspoint SET Author="webmaster" WHERE Author="anonymous";
+</p>
+<h3>DELETE/FROM/WHERE</h3>
+<p>This command is used for removing one or more rows from a table (relation).</p>
+<p><b>Syntax</b> −</p>
+<pre class="result notranslate">DELETE FROM table_name [WHERE condition];
+</pre>
+<p><b>For example</b> −</p>
+<pre class="result notranslate">DELETE FROM tutorialspoints
+   WHERE Author="unknown";
+</pre>
+<div class="mui-container-fluid button-borders show">
+<div class="pre-btn">
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

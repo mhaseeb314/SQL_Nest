@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+</head>
+<body>
+<div class="mui-col-md-6 tutorial-content">
+    <h1>Using DDL Statements</h1>
+    <hr>
+    <div style="text-align:center;" class="google-top-ads">
+    </div>
+    <div class="mui-container-fluid button-borders">
+    </div>
+</div>
+<div class="clearer"></div>
+<h2>Using DDL Statements to Create and Manage Tables</h2>
+<p>A schema is the collection of multiple database objects,which are known as schema objects.These objects have direct access by their owner schema.Below table lists the schema objects.</p>
+<ul class="list">
+    <li><p>Table - to store data</p></li>
+    <li><p>View - to project data in a desired format from one or more tables</p></li>
+    <li><p>Sequence - to generate numeric values</p></li>
+    <li><p>Index - to improve performance of queries on the tables</p></li>
+    <li><p>Synonym - alternative name of an object</p></li>
+</ul>
+<p>One of the first steps in creating a database is to create the tables that will store an organization's data.Database design involves identifying system user requirements for various organizational systems such as order entry, inventory management, and accounts receivable. Regardless of database size and complexity, each database is comprised of tables.</p>
+<h2>Creating the table</h2>
+<p>To create a table in the database,a DBA must have certain information in hand - the table name, column name, column data types, and column sizes. All this information can be modified later using DDL commands. </p>
+<h3>Table Naming Conventions - </h3>
+
+<ul class="list">
+    <li><p>The name you choose for a table must follow these standard rules:</p></li>
+    <li><p>The name must begin with a letter A-Z or a-z</p></li>
+    <li><p>Can contain numbers and underscores</p></li>
+    <li><p>Can be in UPPER of lower case</p></li>
+    <li><p>Can be up to 30 characters in length</p></li>
+    <li><p>Cannot use the same name of another existing object in your schema</p></li>
+    <li><p>Must not be a SQL reserved word</p></li>
+</ul>
+<p>Following the above guidelines, 'EMP85' can be a valid table name.But 85EMP is not.Similarly, UPDATE cannot be a chosen as a table name since it a SQL reserved keyword.</p>
+
+<h2>CREATE TABLE statement</h2>
+
+<p>The CREATE TABLE is a DDL statement which is used to create tables in the database.The table gets created as soon as the CREATE TABLE script is executed and is ready to hold the data onwards.The user must have the CREATE TABLE system privilege to create the table in its own schema.But to create a table in any user's schema, user must have CREATE ANY TABLE schema.</p>
+<p>Here is the syntax of a basic CREATE TABLE statement.There may be many additional clauses to explicitly provide the storage specifications or segment values.</p>
+
+<pre class="prettyprint notranslate prettyprinted" style=""><span class="pln">CREATE TABLE </span><span class="pun">[</span><span class="pln">schema</span><span class="pun">.]</span><span class="pln">table
+          </span><span class="pun">(</span><span class="pln"> </span><span class="pun">{</span><span class="pln"> column datatype </span><span class="pun">[</span><span class="pln">DEFAULT expr</span><span class="pun">]</span><span class="pln"> </span><span class="pun">[</span><span class="pln">column_constraint</span><span class="pun">]</span><span class="pln"> </span><span class="pun">...</span><span class="pln">
+            </span><span class="pun">|</span><span class="pln"> table_constraint</span><span class="pun">}</span><span class="pln">
+         </span><span class="pun">[,</span><span class="pln"> </span><span class="pun">{</span><span class="pln"> column datatype </span><span class="pun">[</span><span class="pln">DEFAULT expr</span><span class="pun">]</span><span class="pln"> </span><span class="pun">[</span><span class="pln">column_constraint</span><span class="pun">]</span><span class="pln"> </span><span class="pun">...</span><span class="pln">
+            </span><span class="pun">|</span><span class="pln"> table_constraint</span><span class="pun">}</span><span class="pln"> </span><span class="pun">]...)</span><span class="pln">
+         </span><span class="pun">[</span><span class="pln">AS subquery</span><span class="pun">]</span></pre>
+<p>In the above syntax, DEFAULT specifies default value which can be used during INSERT statement if the column is ignored. It cannot contain references to other table columns or pseudo columns (CURRVAL, NEXTVAL, LEVEL, and ROWNUM) except SYSDATE and USER, or date constants that are not fully specified. </p>
+<p>Constraints are the rules defined optionally at the column level or table level (covered later in this chapter).These rules are checked during any data action (Insert, update) on the table and raise error to abort the action upon its violation.</p>
+<p>For example, the CREATE TABLE statement below creates a table EMP_TEST. Note the column specifications, data type and precision. </p>
+<pre class="prettyprint notranslate prettyprinted" style=""><span class="pln">CREATE TABLE SCOTT</span><span class="pun">.</span><span class="pln">EMP_TEST
+</span><span class="pun">(</span><span class="pln">EMPID NUMBER</span><span class="pun">,</span><span class="pln">
+ENAME VARCHAR2</span><span class="pun">(</span><span class="lit">100</span><span class="pun">),</span><span class="pln">
+DEPARTMENT_ID NUMBER</span><span class="pun">,</span><span class="pln">
+SALARY NUMBER</span><span class="pun">,</span><span class="pln">
+JOB_ID VARCHAR2</span><span class="pun">(</span><span class="lit">3</span><span class="pun">),</span><span class="pln">
+HIREDATE DATE</span><span class="pun">,</span><span class="pln">
+COMM NUMBER</span><span class="pun">);</span></pre>
+<p>A user can refer the tables from other user's schema by prefixing the username or schema with the table name.For example, a user GUEST wishes to query the employee name and salary from the EMP_TEST table which is owned by SCOTT. He can issue the below query - </p>
+<pre class="prettyprint notranslate prettyprinted" style=""><span class="pln">SELECT  ENAME</span><span class="pun">,</span><span class="pln"> SALARY</span><span class="pun">,</span><span class="pln">
+FROM 	GUEST</span><span class="pun">.</span><span class="pln">EMP_TEST</span><span class="pun">;</span></pre>
+<p>A column can hold a default value during the time of table creation.It helps to restrict the NULL values getting into the column. Default value can be deduced from either a literal, expression or SQL function which must return a compatible data type to the column. In the below CREATE TABLE statement, note that the LOCATION_ID column has default value 100.</p>
+<pre class="prettyprint notranslate prettyprinted" style=""><span class="pln">CREATE TABLE SCOTT</span><span class="pun">.</span><span class="pln">DEPARTMENT
+</span><span class="pun">(</span><span class="pln">DEPARTMENT_ID NUMBER</span><span class="pun">,</span><span class="pln">
+   DNAME VARCHAR2 </span><span class="pun">(</span><span class="lit">100</span><span class="pun">),</span><span class="pln">
+   LOCATION_ID NUMBER DEFAULT </span><span class="lit">100</span><span class="pun">);</span></pre>
+<h2>CTAS - Create table using subquery</h2>
+<p>A table can be created from an existing table in the database using a subquery option.It copies the table structure as well as the data from the table. Data can also be copied based on conditions.The column data type definitions including the explicitly imposed NOT NULL constraints are copied into the new table.</p>
+<p>The below CTAS script creates a new table EMP_BACKUP. Employee data of department 20 gets copied into the new table.</p>
+<pre class="prettyprint notranslate prettyprinted" style=""><span class="pln">CREATE TABLE EMP_BACKUP
+AS
+SELECT </span><span class="pun">*</span><span class="pln"> FROM EMP_TEST
+WHERE department_id</span><span class="pun">=</span><span class="lit">20</span><span class="pun">;</span></pre>
+<h2>Data types</h2>
+<p>Data types are used to specify the basic behavior of a column in the table.On a broader basis,column behavior can either belong to number,character or a date family.There are multiple other subtypes which belong to these families.</p>
+<h2>Number data type</h2>
+<p>The NUMBER datatype encompasses both integer,fixed-point,and floating-point numeric values.Early versions of Oracle defined different datatypes for each of these different types of numbers,but now the NUMBER datatype serves all of these purposes.Choose the NUMBER datatype when a column must store numerical data that can be used in mathematical calculations.Occasionally,the NUMBER datatype is used to store identification numbers where those numbers are generated by the DBMS as sequential numbers.</p>
+<p>NUMBER (p, s), where p is the precision up to 38 digits and s is the scale (number of digits to the right of the decimal point).The scale can range between -84 to 127.</p>
+<p>NUMBER (p),is a fixed-point number with a scale of zero and a precision of p.</p>
+<p>FLOAT [(p)],where p is the binary precision that can range from 1 to 126. If p is not specified the default value is binary 126.</p>
+<h2>Date data type</h2>
+<p>For each DATE data type, Century, Year, Month, Day, Hour, Minute, Second are stored in database. Every database system has a default date format that is defined by the initialization parameter NLS_DATE_FORMAT. This parameter is usually set to DD-MON-YY.If you do not specify a time, the default time is 12:00:00 a.m.</p>
+<h2>Character data type</h2>
+<p>Oracle supports three predefined character datatypes including CHAR, VARCHAR, VARCHAR2, and LONG.VARCHAR and VARCHAR2 are actually synonymous, and Oracle recommends using VARCHAR2 instead of VARCHAR.Use the CHAR datatype when the column will store character values that are fixed-length.For example, a Social Security number (SSN) in the United States is assigned to every citizen and is always 9 characters in size (even though an SSN is strictly composed of digits,the digits are treated as characters), and would be specified as CHAR(9). Use the VARCHAR2 datatype to store alphanumeric data that is variable-length.For example, a customer name or address will vary considerably in terms of the number of characters to be stored.The maximum size of a VARCHAR2 column is 4,000 characters.</p>
+<h2>LOB data type</h2>
+<p>Oracle provides several different LOB datatypes, including CLOB (character large object) and BLOB (binary large object).Columns of these datatypes can store unstructured data including text, image, video, and spatial data.The CLOB datatype can store up to eight terabytes of character data using the CHAR database character set.The BLOB datatype is used to store unstructured binary large objects such as those associated with image and video data where the data is simply a stream of "bit" values.A BLOB datatype can store up to eight terabytes of binary data.The NCLOB data type can store character large objects in multibyte national character set up to 8TB to 128TB.The BFILE data type value works as a file locator or pointer to file on the server's file system. The maximum file size supported is 8TB to 128TB.</p>
+<h2>Constraints</h2>
+<p>Constraints are the set of rules defined in Oracle tables to ensure data integrity.These rules are enforced placed for each column or set of columns.Whenever the table participates in data action, these rules are validated and raise exception upon violation. The available constraint types are NOT NULL, Primary Key, Unique, Check, and Foreign Key.</p>
+<p>The below syntax can be used to impose constraint at the column level.</p>
+<h3>Syntax: </h3>
+<pre class="prettyprint notranslate prettyprinted" style=""><span class="pln">column </span><span class="pun">[</span><span class="pln">data type</span><span class="pun">]</span><span class="pln"> </span><span class="pun">[</span><span class="pln">CONSTRAINT constraint_name</span><span class="pun">]</span><span class="pln"> constraint_type</span></pre>
+<p>All constraints except NOT NULL, can also be defined at the table level. Composite constraints can only be specified at the table level.</p>
+<h2>NOT NULL Constraint</h2>
+<p>A NOT NULL constraint means that a data row must have a value for the column specified as NOT NULL.If a column is specified as NOT NULL,the Oracle RDBMS will not allow rows to be stored to the employee table that violate this constraint.It can only be defined at column level, and not at the table level. </p>
+<h3>Syntax: </h3>
+<pre class="prettyprint notranslate prettyprinted" style=""><span class="pln">COLUMN </span><span class="pun">[</span><span class="pln">data type</span><span class="pun">]</span><span class="pln"> </span><span class="pun">[</span><span class="pln">NOT NULL</span><span class="pun">]</span></pre>
+<h2>UNIQUE constraint</h2>
+<p>Sometimes it is necessary to enforce uniqueness for a column value that is not a primary key column.The UNIQUE constraint can be used to enforce this rule and Oracle will reject any rows that violate the unique constraint.Unique constraint ensures that the column values are distinct, without any duplicates. </p>
+<h3>Syntax:</h3>
+<p><b>Column Level: </b></p>
+<pre class="prettyprint notranslate prettyprinted" style=""><span class="pln">COLUMN </span><span class="pun">[</span><span class="pln">data type</span><span class="pun">]</span><span class="pln"> </span><span class="pun">[</span><span class="pln">CONSTRAINT </span><span class="str">&lt;name&gt;</span><span class="pun">]</span><span class="pln"> </span><span class="pun">[</span><span class="pln">UNIQUE</span><span class="pun">]</span></pre>
+<p><b>Table Level: </b>CONSTRAINT [constraint name] UNIQUE (column name)</p>
+<p>Note: Oracle internally creates unique index to prevent duplication in the column values.Indexes would be discussed later in PL/SQL.</p>
+<pre class="prettyprint notranslate prettyprinted" style=""><span class="pln">CREATE TABLE TEST
+</span><span class="pun">(</span><span class="pln"> </span><span class="pun">...</span><span class="pln"> </span><span class="pun">,</span><span class="pln">
+  NAME VARCHAR2</span><span class="pun">(</span><span class="lit">20</span><span class="pun">)</span><span class="pln"> 
+          CONSTRAINT TEST_NAME_UK UNIQUE</span><span class="pun">,</span><span class="pln">
+  </span><span class="pun">...</span><span class="pln"> </span><span class="pun">);</span></pre>
+<p>In case of composite unique key,it must be defined at table level as below.</p>
+<pre class="prettyprint notranslate prettyprinted" style=""><span class="pln">CREATE TABLE TEST
+</span><span class="pun">(</span><span class="pln"> </span><span class="pun">...</span><span class="pln"> </span><span class="pun">,</span><span class="pln">
+  NAME VARCHAR2</span><span class="pun">(</span><span class="lit">20</span><span class="pun">),</span><span class="pln">
+  STD VARCHAR2</span><span class="pun">(</span><span class="lit">20</span><span class="pun">)</span><span class="pln"> </span><span class="pun">,</span><span class="pln">
+      CONSTRAINT TEST_NAME_UK UNIQUE </span><span class="pun">(</span><span class="pln">NAME</span><span class="pun">,</span><span class="pln"> STD</span><span class="pun">)</span><span class="pln">
+ </span><span class="pun">);</span></pre>
+<h2>Primary Key</h2>
+<p>Each table must normally contain a column or set of columns that uniquely identifies rows of data that are stored in the table.This column or set of columns is referred to as the primary key.Most tables have a single column as the primary key.Primary key columns are restricted against NULLs and duplicate values. </p>
+<h3>Points to be noted - </h3>
+<ul class="list">
+    <li><p>A table can have only one primary key.</p></li>
+    <li><p>Multiple columns can be clubbed under a composite primary key.</p></li>
+    <li><p>Oracle internally creates unique index to prevent duplication in the column values.Indexes would be discussed later in PL/SQL.</p></li>
+</ul>
+<h3>Syntax:</h3>
+<p><b>Column level:</b></p>
+<pre class="prettyprint notranslate prettyprinted" style=""><span class="pln">COLUMN </span><span class="pun">[</span><span class="pln">data type</span><span class="pun">]</span><span class="pln"> </span><span class="pun">[</span><span class="pln">CONSTRAINT </span><span class="pun">&lt;</span><span class="pln">constraint name</span><span class="pun">&gt;</span><span class="pln"> PRIMARY KEY</span><span class="pun">]</span></pre>
+<p><b>Table level:</b></p>
+<pre class="prettyprint notranslate prettyprinted" style=""><span class="pln">CONSTRAINT </span><span class="pun">[</span><span class="pln">constraint name</span><span class="pun">]</span><span class="pln"> PRIMARY KEY </span><span class="pun">[</span><span class="pln">column </span><span class="pun">(</span><span class="pln">s</span><span class="pun">)]</span></pre>
+<p>The following example shows how to use PRIMARY KEY constraint at column level.</p>
+<pre class="prettyprint notranslate prettyprinted" style=""><span class="pln">CREATE TABLE TEST
+</span><span class="pun">(</span><span class="pln"> ID  NUMBER CONSTRAINT TEST_PK PRIMARY KEY</span><span class="pun">,</span><span class="pln">
+  </span><span class="pun">...</span><span class="pln">  </span><span class="pun">);</span><span class="pln">
+  </span></pre>
+<p>The following example shows how to define composite primary key using PRIMARY KEY constraint at the table level.</p>
+<pre class="prettyprint notranslate prettyprinted" style=""><span class="pln">CREATE TABLE TEST
+ </span><span class="pun">(</span><span class="pln"> </span><span class="pun">...,</span><span class="pln">
+   CONSTRAINT TEST_PK PRIMARY KEY </span><span class="pun">(</span><span class="pln">ID</span><span class="pun">)</span><span class="pln"> 
+ </span><span class="pun">);</span><span class="pln">
+ </span></pre>
+<h2>Foreign Key</h2>
+<p>When two tables share the parent child relationship based on specific column, the joining column in the child table is known as Foreign Key.This property of corresponding column in the parent table is known as Referential integrity.Foreign Key column values in the child table can either be null or must be the existing values of the parent table.Please note that only primary key columns of the referenced table are eligible to enforce referential integrity.</p>
+<p>If a foreign key is defined on the column in child table then Oracle does not allow the parent row to be deleted,if it contains any child rows.However,if ON DELETE CASCADE option is given at the time of defining foreign key,Oracle deletes all child rows while parent row is being deleted.Similarly,ON DELETE SET NULL indicates that when a row in the parent table is deleted, the foreign key values are set to null.</p>
+<h3>Syntax:</h3>
+<p><b>Column Level:</b></p>
+<p class="prettyprint notranslate prettyprinted" style=""><p>COLUMN [data type] [CONSTRAINT] [constraint name] [REFERENCES] [(column name)]</p>
+<p><b>Table level:</b></p>
+<p class="prettyprint notranslate prettyprinted" style=""><p class="pln">CONSTRAINT [constraint name] PRIMARY KEY [column(s)]
+    <p>The following example shows how to use FOREIGN KEY constraint at column level.</p>
+<pre class="prettyprint notranslate prettyprinted" style=""><span class="pln">CREATE TABLE TEST
+</span><span class="pun">(</span><span class="pln">ccode varchar2</span><span class="pun">(</span><span class="lit">5</span><span class="pun">)</span><span class="pln"> 
+     CONSTRAINT TEST_FK REFERENCES PARENT_TEST</span><span class="pun">(</span><span class="pln">ccode</span><span class="pun">),</span><span class="pln">
+   </span><span class="pun">...</span><span class="pln">
+</span><span class="pun">);</span></pre>
+<p><b>Usage of ON DELETE CASCADE clause</b></p>
+<pre class="prettyprint notranslate prettyprinted" style=""><span class="pln">CREATE TABLE TEST
+</span><span class="pun">(</span><span class="pln">ccode varchar2</span><span class="pun">(</span><span class="lit">5</span><span class="pun">)</span><span class="pln"> 
+   CONSTRAINT TEST_FK REFERENCES PARENT_TEST </span><span class="pun">(</span><span class="pln">ccode</span><span class="pun">)</span><span class="pln">
+   ON DELETE CASCADE</span><span class="pun">,</span><span class="pln">
+   </span><span class="pun">...</span><span class="pln">
+</span><span class="pun">);</span></pre>
+<h2>Check constraint</h2>
+<p>Sometimes the data values stored in a specific column must fall within some acceptable range of values.A CHECK constraint requires that the specified check condition is either true or unknown for each row stored in the table.Check constraint allows to impose a conditional rule on a column, which must be validated before data is inserted into the column. The condition must not contain a sub query or pseudo column CURRVAL NEXTVAL, LEVEL, ROWNUM, or SYSDATE.</p>
+<p>Oracle allows a single column to have more than one CHECK constraint.  In fact, there is no practical limit to the number of CHECK constraints that can be defined for a column.</p>
+<h3>Syntax: </h3>
+<p><b>Column level:</b></p>
+<pre class="prettyprint notranslate prettyprinted" style=""><span class="pln">COLUMN </span><span class="pun">[</span><span class="pln">data type</span><span class="pun">]</span><span class="pln"> CONSTRAINT </span><span class="pun">[</span><span class="pln">name</span><span class="pun">]</span><span class="pln"> </span><span class="pun">[</span><span class="pln">CHECK </span><span class="pun">(</span><span class="pln">condition</span><span class="pun">)]</span></pre>
+<p><b>Table level:</b></p>
+<pre class="prettyprint notranslate prettyprinted" style=""><span class="pln">CONSTRAINT </span><span class="pun">[</span><span class="pln">name</span><span class="pun">]</span><span class="pln"> CHECK </span><span class="pun">(</span><span class="pln">condition</span><span class="pun">)</span></pre>
+<p>The following example shows how to use CHECK constraint at column level.</p>
+<pre class="prettyprint notranslate prettyprinted" style=""><span class="pln">CREATE TABLE TEST
+</span><span class="pun">(</span><span class="pln"> </span><span class="pun">...,</span><span class="pln">
+   GRADE </span><span class="kwd">char</span><span class="pln"> </span><span class="pun">(</span><span class="lit">1</span><span class="pun">)</span><span class="pln"> CONSTRAINT TEST_CHK
+   CHECK </span><span class="pun">(</span><span class="pln">upper </span><span class="pun">(</span><span class="pln">GRADE</span><span class="pun">)</span><span class="pln"> </span><span class="kwd">in</span><span class="pln"> </span><span class="pun">(</span><span class="str">'A'</span><span class="pun">,</span><span class="str">'B'</span><span class="pun">,</span><span class="str">'C'</span><span class="pun">)),</span><span class="pln">
+   </span><span class="pun">...</span><span class="pln">
+</span><span class="pun">);</span></pre>
+<p>The following example shows how to use CHECK constraint at table level.</p>
+<pre class="prettyprint notranslate prettyprinted" style=""><span class="pln">CREATE TABLE TEST
+</span><span class="pun">(</span><span class="pln"> </span><span class="pun">...,</span><span class="pln">
+   CONSTRAINT TEST_CHK
+   CHECK </span><span class="pun">(</span><span class="pln">stdate </span><span class="pun">&lt;</span><span class="pln"> </span><span class="pun">=</span><span class="pln"> enddate</span><span class="pun">),</span><span class="pln">
+</span><span class="pun">);</span></pre>
+<h2>ALTER TABLE statement</h2>
+<p>A DBA can make changes to the table structure or column definitions after the table has been created in the database.The DDL command ALTER TABLE is used to perform such actions.Alter command provides multiple utilities exclusive for schema objects.The ALTER TABLE statement is used to add, drop, rename, and modify a column in a table.</p>
+<p>The below ALTER TABLE statement renames the table EMP to EMP_NEW.</p>
+<pre class="prettyprint notranslate prettyprinted" style=""><span class="pln">ALTER TABLE EMP RENAME TO EMP_NEW</span><span class="pun">;</span></pre>
+<p>The below ALTER TABLE statement adds a new column TESTCOL to the EMP_NEW table</p>
+<pre class="prettyprint notranslate prettyprinted" style=""><span class="pln">ALTER TABLE EMP_NEW ADD </span><span class="pun">(</span><span class="pln">TESTCOL VARCHAR2 </span><span class="pun">(</span><span class="lit">100</span><span class="pun">))</span></pre>
+<p>The below ALTER TABLE statement renames the column TESTCOL to TESTNEW.</p>
+<pre class="prettyprint notranslate prettyprinted" style=""><span class="pln">ALTER TABLE EMP_NEW RENAME COLUMN TESTCOL TO TESTNEW</span></pre>
+<p>The below ALTER TABLE statement drop the column TESTNEW from EMP_NEW table</p>
+<pre class="prettyprint notranslate prettyprinted" style=""><span class="pln">ALTER TABLE EMP_NEW DROP COLUMN TESTNEW</span><span class="pun">;</span></pre>
+<p>The below ALTER TABLE statement adds primary key on the EMPLOYEE_ID column.</p>
+<pre class="prettyprint notranslate prettyprinted" style=""><span class="pln">ALTER TABLE EMP_NEW ADD PRIMARY KEY </span><span class="pun">(</span><span class="pln">EMPLOYEE_ID</span><span class="pun">)</span></pre>
+<p>The below ALTER TABLE statement drop the primary key.</p>
+<pre class="prettyprint notranslate prettyprinted" style=""><span class="pln">ALTER TABLE EMP_NEW DROP PRIMARY KEY</span><span class="pun">;</span></pre>
+<p>The below ALTER TABLE statement switches the table mode to read only.
+</p>
+<pre class="prettyprint notranslate prettyprinted" style=""><span class="pln">ALTER TABLE EMP_NEW READ ONLY</span><span class="pun">;</span></pre>
+<h2>Read Only Tables</h2>
+<p>Read only tables came as an enhancement in Oracle 11g.It allows the tables to be used for read only purpose. In earlier oracle versions, tables were made read only by granting SELECT privilege to the other users, but owner still had the read write privilege.But now,if a table is set as Read only,even owner doesn't have access on data manipulation.</p>
+<h3>Syntax:</h3>
+<pre class="prettyprint notranslate prettyprinted" style=""><span class="pln">ALTER TALE </span><span class="pun">[</span><span class="pln">TABLE NAME</span><span class="pun">]</span><span class="pln"> READ ONLY</span></pre>
+<pre class="prettyprint notranslate prettyprinted" style=""><span class="pln">ALTER TALE </span><span class="pun">[</span><span class="pln">TABLE NAME</span><span class="pun">]</span><span class="pln"> READ WRITE</span></pre>
+<h3>Illustration</h3>
+<pre class="prettyprint notranslate prettyprinted" style=""><span class="pln">SQL</span><span class="pun">&gt;</span><span class="pln">CREATE TABLE ORATEST </span><span class="pun">(</span><span class="pln">id NUMBER</span><span class="pun">)</span><span class="pln">
+
+SQL</span><span class="pun">&gt;</span><span class="pln">INSERT INTO ORATEST VALUES </span><span class="pun">(</span><span class="lit">1</span><span class="pun">);</span><span class="pln">
+
+SQL</span><span class="pun">&gt;</span><span class="pln">ALTER TABLE ORATEST READ ONLY</span><span class="pun">;</span><span class="pln">
+
+SQL</span><span class="pun">&gt;</span><span class="pln"> INSERT INTO ORATEST VALUES </span><span class="pun">(</span><span class="lit">2</span><span class="pun">);</span><span class="pln">
+INSERT INTO ORATEST VALUES </span><span class="pun">(</span><span class="lit">2</span><span class="pun">)</span><span class="pln">
+            </span><span class="pun">*</span><span class="pln">
+ERROR at line </span><span class="lit">1</span><span class="pun">:</span><span class="pln">
+ORA</span><span class="pun">-</span><span class="lit">12081</span><span class="pun">:</span><span class="pln"> update operation </span><span class="kwd">not</span><span class="pln"> allowed on table </span><span class="str">"TEST"</span><span class="pun">.</span><span class="str">"ORATEST"</span><span class="pln">
+
+SQL</span><span class="pun">&gt;</span><span class="pln"> UPDATE ORATEST SET id </span><span class="pun">=</span><span class="pln"> </span><span class="lit">2</span><span class="pun">;</span><span class="pln">
+UPDATE ORATEST SET id </span><span class="pun">=</span><span class="pln"> </span><span class="lit">2</span><span class="pln">
+       </span><span class="pun">*</span><span class="pln">
+ERROR at line </span><span class="lit">1</span><span class="pun">:</span><span class="pln">
+ORA</span><span class="pun">-</span><span class="lit">12081</span><span class="pun">:</span><span class="pln"> update operation </span><span class="kwd">not</span><span class="pln"> allowed on table </span><span class="str">"TEST"</span><span class="pun">.</span><span class="str">"ORATEST"</span><span class="pln">
+
+SQL</span><span class="pun">&gt;</span><span class="pln"> DELETE FROM ORATEST</span><span class="pun">;</span><span class="pln">
+DELETE FROM ORATEST
+            </span><span class="pun">*</span><span class="pln">
+ERROR at line </span><span class="lit">1</span><span class="pun">:</span><span class="pln">
+ORA</span><span class="pun">-</span><span class="lit">12081</span><span class="pun">:</span><span class="pln"> update operation </span><span class="kwd">not</span><span class="pln"> allowed on table </span><span class="str">"TEST"</span><span class="pun">.</span><span class="str">"ORATEST"</span><span class="pln">
+
+SQL</span><span class="pun">&gt;</span><span class="pln"> TRUNCATE TABLE ORATEST</span><span class="pun">;</span><span class="pln">
+TRUNCATE TABLE ORATEST
+               </span><span class="pun">*</span><span class="pln">
+ERROR at line </span><span class="lit">1</span><span class="pun">:</span><span class="pln">
+ORA</span><span class="pun">-</span><span class="lit">12081</span><span class="pun">:</span><span class="pln"> update operation </span><span class="kwd">not</span><span class="pln"> allowed on table </span><span class="str">"TEST"</span><span class="pun">.</span><span class="str">"ORATEST"</span><span class="pln">
+
+SQL</span><span class="pun">&gt;</span><span class="pln"> ALTER TABLE ORATEST ADD </span><span class="pun">(</span><span class="pln">description VARCHAR2 </span><span class="pun">(</span><span class="lit">50</span><span class="pun">));</span><span class="pln">
+ALTER TABLE ORATEST ADD </span><span class="pun">(</span><span class="pln">description VARCHAR2 </span><span class="pun">(</span><span class="lit">50</span><span class="pun">))</span><span class="pln">
+</span><span class="pun">*</span><span class="pln">
+ERROR at line </span><span class="lit">1</span><span class="pun">:</span><span class="pln">
+ORA</span><span class="pun">-</span><span class="lit">12081</span><span class="pun">:</span><span class="pln"> update operation </span><span class="kwd">not</span><span class="pln"> allowed on table </span><span class="str">"TEST"</span><span class="pun">.</span><span class="str">"ORATEST"</span><span class="pln">
+
+SQL</span><span class="pun">&gt;</span><span class="pln"> ALTER TABLE ORATEST READ WRITE</span><span class="pun">;</span><span class="pln">
+
+</span><span class="typ">Table</span><span class="pln"> altered</span><span class="pun">.</span><span class="pln">
+
+SQL</span><span class="pun">&gt;</span><span class="pln"> DELETE FROM ORATEST</span><span class="pun">;</span><span class="pln">
+
+</span><span class="lit">1</span><span class="pln"> row deleted</span><span class="pun">.</span></pre>
+<h2>DROP TABLE statement</h2>
+<p>The DROP TABLE statement is used to remove a table from the database. The dropped table and its data remain no longer available for selection.Dropped table can be recovered using FLASHBACK utility,if available in recyclebin.Dropping a table drops the index and triggers associated with it. </p>
+<h3>Syntax:</h3>
+<pre class="prettyprint notranslate prettyprinted" style=""><span class="pln">DROP TABLE </span><span class="pun">[</span><span class="pln">TABLE NAME</span><span class="pun">]</span><span class="pln"> </span><span class="pun">[</span><span class="pln">PURGE</span><span class="pun">]</span></pre>
+<p>The below statement will drop the table and place it into the recyclebin.</p>
+<pre class="prettyprint notranslate prettyprinted" style=""><span class="pln">DROP TABLE emp_new</span><span class="pun">;</span></pre>
+<p>The below statement will drop the table and flush it out from the recyclebin also.</p>
+<pre class="prettyprint notranslate prettyprinted" style=""><span class="pln">DROP TABLE emp_new PURGE</span><span class="pun">;</span></pre>
+<div class="mui-container-fluid button-borders show">
+</div>
+</div>
+<div class="google-bottom-ads">
+    <div>
+        <div id="vi_bottom_ads"><div class="adsbyvli" data-ad-slot="vi_9013190"></div></div>
+        <script>
+     (function() {
+     var adPos = document.getElementById('vi_bottom_ads');
+     var mobile_ad_id = "vi_9012177";
+     var desktop_ad_id = "vi_9013190";
+     var ad_id = window.innerWidth <= 768 ? mobile_ad_id : desktop_ad_id;
+     adPos.innerHTML = '<div class="adsbyvli" data-ad-slot="' + ad_id + '"></div>';
+     (vitag.displayInit = window.vitag.displayInit || []).push(function () {
+         viAPItag.display(ad_id);
+     });
+     }())
+   </script>
+    </div>
+    <div class="space-bottom"></div>
+</div>
+</div>
+</body>
+</html>

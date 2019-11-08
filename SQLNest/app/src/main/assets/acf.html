@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+
+<h2>Reporting Aggregate data using the Group functions</h2>
+<p>SQL has numerous predefined aggregate functions that can be used to write queries to produce exactly this kind of information.The GROUP BY clause specifies how to group rows from a data table when aggregating information, while the HAVING clause filters out rows that do not belong in specified groups. </p>
+<p>Aggregate functions perform a variety of actions such as counting all the rows in a table, averaging a column's data, and summing numeric data.  Aggregates can also search a table to find the highest "MAX" or lowest "MIN" values in a column.  As with other types of queries, you can restrict, or filter out the rows these functions act on with the WHERE clause. For example, if a manager needs to know how many employees work in an organization, the aggregate function named COUNT(*) can be used to produce this information.The COUNT(*) function shown in the below SELECT statement counts all rows in a table.</p>
+<pre class="prettyprint notranslate prettyprinted" style=""><span class="pln">SELECT COUNT</span><span class="pun">(*)</span><span class="pln">
+FROM employees</span><span class="pun">;</span><span class="pln">
+
+  COUNT</span><span class="pun">(*)</span><span class="pln">
+</span><span class="pun">----------</span><span class="pln">
+        </span><span class="lit">24</span></pre>
+<p>The result table for the COUNT(*) function is a single column from a single row known as a scalar result or value.  Notice that the result table has a column heading that corresponds to the name of the aggregate function specified in the SELECT clause. </p>
+<p>Some of the commonly used aggregate functions are as below - </p>
+<pre class="prettyprint notranslate prettyprinted" style=""><span class="pln">SUM</span><span class="pun">(</span><span class="pln"> </span><span class="pun">[</span><span class="pln">ALL </span><span class="pun">|</span><span class="pln"> DISTINCT</span><span class="pun">]</span><span class="pln"> expression </span><span class="pun">)</span><span class="pln">
+
+AVG</span><span class="pun">(</span><span class="pln"> </span><span class="pun">[</span><span class="pln">ALL </span><span class="pun">|</span><span class="pln"> DISTINCT</span><span class="pun">]</span><span class="pln"> expression </span><span class="pun">)</span><span class="pln">
+
+COUNT</span><span class="pun">(</span><span class="pln"> </span><span class="pun">[</span><span class="pln">ALL </span><span class="pun">|</span><span class="pln"> DISTINCT</span><span class="pun">]</span><span class="pln"> expression </span><span class="pun">)</span><span class="pln">
+
+COUNT</span><span class="pun">(*)</span><span class="pln">
+
+MAX</span><span class="pun">(</span><span class="pln">expression</span><span class="pun">)</span><span class="pln">
+
+MIN</span><span class="pun">(</span><span class="pln">expression</span><span class="pun">)</span></pre>
+<p>The ALL and DISTINCT keywords are optional, and perform as they do with the SELECT clauses that you have learned to write.The ALL keyword is the default where the option is allowed.The expression listed in the syntax can be a constant,a function, or any combination of column names, constants, and functions connected by arithmetic operators.However, aggregate functions are most often used with a column name. Except COUNT function,all the aggregate functions do not consider NULL values.</p>
+<p>There are two rules that you must understand and follow when using aggregates:</p>
+<ul class="list">
+<li><p>Aggregate functions can be used in both the SELECT and HAVING clauses (the HAVING clause is covered later in this chapter).</p></li>
+<li><p>Aggregate functions cannot be used in a WHERE clause. Its violation will produce the Oracle ORA-00934 group function is not allowed here error message.</p></li>
+</ul>
+<h2>Illustrations</h2>
+<p>The below SELECT query counts the number of employees in the organization.</p>
+<pre class="prettyprint notranslate prettyprinted" style=""><span class="pln">SELECT COUNT</span><span class="pun">(*)</span><span class="pln"> </span><span class="typ">Count</span><span class="pln">
+FROM employees</span><span class="pun">;</span><span class="pln">
+
+COUNT
+</span><span class="pun">-----</span><span class="pln">
+   </span><span class="lit">24</span></pre>
+<p>The below SELECT query returns the average of the salaries of employees in the organization.</p>
+<pre class="prettyprint notranslate prettyprinted" style=""><span class="pln">SELECT AVG</span><span class="pun">(</span><span class="typ">Salary</span><span class="pun">)</span><span class="pln"> average_sal
+FROM employees</span><span class="pun">;</span><span class="pln">
+
+AVERAGE_SAL
+</span><span class="pun">-----------</span><span class="pln">
+      </span><span class="lit">15694</span></pre>
+
+<p>The below SELECT query returns the sum of the salaries of employees in the organization.</p>
+<pre class="prettyprint notranslate prettyprinted" style=""><span class="pln">SELECT SUM</span><span class="pun">(</span><span class="typ">Salary</span><span class="pun">)</span><span class="pln"> total_sal
+FROM employees</span><span class="pun">;</span><span class="pln">
+
+TOTAL_SAL
+</span><span class="pun">---------</span><span class="pln">
+    </span><span class="lit">87472</span></pre>
+<p>The below SELECT query returns the oldest and latest hired dates of employees in the organization.</p>
+<p class="prettyprint notranslate prettyprinted" >SELECT MIN (hire_date)oldest, MAX (hire_date)latest
+FROM employees;</p>
+
+OLDEST		LATEST
+</span><span class="pun">---------</span><span class="pln">	</span><span class="pun">-----------</span><span class="pln">
+</span><span class="lit">16</span><span class="pun">-</span><span class="pln">JAN</span><span class="pun">-</span><span class="lit">83</span><span class="pln">	</span><span class="lit">01</span><span class="pun">-</span><span class="pln">JUL</span><span class="pun">-</span><span class="lit">2012</span></p>
+<h2>GROUP BY </h2>
+<p>Aggregate functions are normally used in conjunction with a GROUP BY clause. The GROUP BY clause enables you to use aggregate functions to answer more complex managerial questions such as:</p>
+<p>What is the average salary of employees in each department?</p>
+<p>How many employees work in each department?</p>
+<p>How many employees are working on a particular project?</p>
+<p>Group by function establishes data groups based on columns and aggregates the information within a group only. The grouping criterion is defined by the columns specified in GROUP BY clause. Following this hierarchy, data is first organized in the groups and then WHERE clause restricts the rows in each group.</p>
+<h3>Guidelines of using GROUP BY clause</h3>
+<p>(1) All the dependent columns or columns used in GROUP BY function must form the basis of grouping, hence must be included in GROUP BY clause also.</p>
+<pre class="prettyprint notranslate prettyprinted" style=""><span class="pln">SELECT	DEPARTMENT_ID</span><span class="pun">,</span><span class="pln"> SUM</span><span class="pun">(</span><span class="pln">SALARY</span><span class="pun">)</span><span class="pln">
+FROM employees</span><span class="pun">;</span><span class="pln">
+
+DEPARTMENT_ID</span><span class="pun">,</span><span class="pln">
+</span><span class="pun">*</span><span class="pln">
+ERROR at line </span><span class="lit">2</span><span class="pun">:</span><span class="pln">
+ORA</span><span class="pun">-</span><span class="lit">00937</span><span class="pun">:</span><span class="pln"> </span><span class="kwd">not</span><span class="pln"> a single</span><span class="pun">-</span><span class="kwd">group</span><span class="pln"> </span><span class="kwd">group</span><span class="pln"> </span><span class="kwd">function</span></pre>
+<p>(2) GROUP BY clause does not support the use of column alias, but the actual names.</p>
+<p>(3) GROUP BY clause can only be used with aggregate functions like SUM, AVG, COUNT, MAX, and MIN.If it is used with single row functions,Oracle throws an exception as "ORA-00979: not a GROUP BY expression".</p>
+<p>(4) Aggregate functions cannot be used in a GROUP BY clause. Oracle will return the "ORA-00934: group function not allowed" here error message.</p>
+<p>Below query lists the count of employees working in each department.</p>
+<pre class="prettyprint notranslate prettyprinted" style=""><span class="pln">SELECT  DEPARTMENT_ID</span><span class="pun">,</span><span class="pln">  COUNT </span><span class="pun">(*)</span><span class="pln">
+FROM employees
+GROUP BY DEPARTMENT_ID</span><span class="pun">;</span></pre>
+<p>Similarly, below query to find sum of salaries for respective job ids in each department. Note the group is established based on Department and Job id. So they appear in GROUP BY clause.</p>
+<pre class="prettyprint notranslate prettyprinted" style=""><span class="pln">SELECT DEPARTMENT_ID</span><span class="pun">,</span><span class="pln"> JOB_ID</span><span class="pun">,</span><span class="pln"> SUM </span><span class="pun">(</span><span class="pln">SAL</span><span class="pun">)</span><span class="pln">
+FROM employees
+GROUP BY DEPARTMENT_ID</span><span class="pun">,</span><span class="pln"> JOB_ID</span><span class="pun">;</span></pre>
+<p>The below query also produces the same result. Please note that grouping is based on the department id and job id columns but not used for display purpose.</p>
+<pre class="prettyprint notranslate prettyprinted" style=""><span class="pln">SELECT SUM </span><span class="pun">(</span><span class="pln">SALARY</span><span class="pun">)</span><span class="pln">
+FROM employees
+GROUP BY DEPARTMENT_ID</span><span class="pun">,</span><span class="pln"> JOB_ID</span><span class="pun">;</span></pre>
+<h2>Use of DISTINCT, ALL keywords with Aggregate functions</h2>
+<p>By specifying DISTINCT keyword with the input parameter, group by function considers only the unique value of the column for aggregation. By specifying ALL keyword with the input parameter, group by function considers all the values of the column for aggregation, including nulls and duplicates. ALL is the default specification.</p>
+<h2>The HAVING clause</h2>
+<p>The HAVING clause is used for aggregate functions in the same way that a WHERE clause is used for column names and expressions.Essentially,the HAVING and WHERE clauses do the same thing, that is filter rows from inclusion in a result table based on a condition.  While it may appear that a HAVING clause filters out groups, it does not.Rather,a HAVING clause filters rows.</p>
+<p>When all rows for a group are eliminated so is the group.To summarize, the important differences between the WHERE and HAVING clauses are:</p>
+<p>A WHERE clause is used to filter rows BEFORE the GROUPING action (i.e., before the calculation of the aggregate functions).</p>
+<p>A HAVING clause filters rows AFTER the GROUPING action (i.e., after the calculation of the aggregate functions). </p>
+<pre class="prettyprint notranslate prettyprinted" style=""><span class="pln">SELECT JOB_ID</span><span class="pun">,</span><span class="pln">	SUM </span><span class="pun">(</span><span class="pln">SALARY</span><span class="pun">)</span><span class="pln">
+FROM employees
+GROUP BY JOB_ID
+HAVING SUM </span><span class="pun">(</span><span class="pln">SALARY</span><span class="pun">)</span><span class="pln"> </span><span class="pun">&gt;</span><span class="pln"> </span><span class="lit">10000</span><span class="pun">;</span></pre>
+<p>
+The HAVING clause is a conditional option that is directly related to the GROUP BY clause option because a HAVING clause eliminates rows from a result table based on the result of a GROUP BY clause. </p>
+<pre class="prettyprint notranslate prettyprinted" style=""><span class="pln">SELECT department_id</span><span class="pun">,</span><span class="pln"> AVG</span><span class="pun">(</span><span class="typ">Salary</span><span class="pun">)</span><span class="pln">
+FROM employees
+HAVING AVG</span><span class="pun">(</span><span class="typ">Salary</span><span class="pun">)</span><span class="pln"> </span><span class="pun">&gt;</span><span class="pln"> </span><span class="lit">33000</span><span class="pun">;</span><span class="pln"></pre>
+<p>ERROR at line 1:  ORA-00937:  not a single-group group function </p>
+
+</div>
+</div>
+</body>
+</html>

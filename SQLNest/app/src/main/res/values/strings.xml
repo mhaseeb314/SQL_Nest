@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">SQL Nest</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="tutorial">Tutorial</string>
+    <string name="quiz">Quiz</string>
+    <string name="ddl">DDL</string>
+    <string name="dml">DML</string>
+    <string name="af">Aggregate Functions</string>
+    <string name="acf">Additional Clauses Functions</string>
+    <string name="under_development">Under Development</string>
+
+</resources>
