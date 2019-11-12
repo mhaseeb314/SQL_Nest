@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".fragment.GameplayFragment"
+    android:padding="10dp"
+    android:id="@+id/rlMain">
+
+    <androidx.core.widget.ContentLoadingProgressBar
+        android:id="@+id/pbTime"
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        style="@android:style/Widget.Holo.Light.ProgressBar.Horizontal"
+        android:max="100"
+        android:progress="100"
+        android:progressTint="@color/red"
+        android:layout_centerInParent="true"
+
+        />
+
+
+</RelativeLayout>
