@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
@@ -56,18 +57,22 @@ public class QuizAdapter extends RecyclerView.Adapter<QuizAdapter.ViewHolder> {
 
             case "ddl" : {
                 holder.item.setBackground(context.getDrawable(R.drawable.ddl_test_background));
+                holder.tvTestName.setText(context.getResources().getString(R.string.ddl_full));
             }
             break;
             case "dml" : {
                 holder.item.setBackground(context.getDrawable(R.drawable.dml_test_background));
+                holder.tvTestName.setText(context.getResources().getString(R.string.dml_full));
             }
             break;
             case "af" : {
                 holder.item.setBackground(context.getDrawable(R.drawable.af_test_background));
+                holder.tvTestName.setText(context.getResources().getString(R.string.af));
             }
             break;
             default :{
                 holder.item.setBackground(context.getDrawable(R.drawable.acf_test_background));
+                holder.tvTestName.setText(context.getResources().getString(R.string.acf));
             }
             break;
         }
@@ -82,22 +87,24 @@ public class QuizAdapter extends RecyclerView.Adapter<QuizAdapter.ViewHolder> {
     implements View.OnClickListener{
 
         RelativeLayout item;
+        TextView tvTestName;
 
          ViewHolder(View itemView){
             super(itemView);
              itemView.setOnClickListener(this);
 
              item = itemView.findViewById(R.id.rlItem);
+             tvTestName = itemView.findViewById(R.id.tvTestName);
         }
 
         @Override
         public void onClick(View view) {
-            mListener.onDetail(mData.get(getAdapterPosition()));
+            mListener.onDetail(mData.get(getAdapterPosition()), getAdapterPosition());
         }
     }
 
     public interface ItemClickListener {
-        public void onDetail(Test test);
+        public void onDetail(Test test , int position);
     }
 
 }

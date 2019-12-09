@@ -15,11 +15,10 @@ import java.util.ArrayList;
 public class Util {
 
     private static ArrayList<Test> tests = new ArrayList<>();
-//    private static ArrayList<Test> DdlModel = new ArrayList<>();
-//    private static ArrayList<Test> afModel = new ArrayList<>();
-//    private static ArrayList<Test> AcfModel = new ArrayList<>();
-
-    private static ArrayList<Option> questionOptions = new ArrayList<>();
+    private static ArrayList<Question> dmlQuestions = new ArrayList<>();
+    private static ArrayList<Question> ddlQuestions = new ArrayList<>();
+    private static ArrayList<Question> afQuestions = new ArrayList<>();
+    private static ArrayList<Question> acfQuestions = new ArrayList<>();
 
     public static void replaceFragment(Fragment fragment, String tag , Boolean addToStack , Boolean clearStack
             , FragmentActivity fa){
@@ -33,9 +32,7 @@ public class Util {
     }
 
     public static void setDmlQuestions (){
-        ArrayList<Question> dmlQuestions = new ArrayList<>();
         ArrayList<Option> questionOptions = new ArrayList<>();
-
         questionOptions.add(new Option(0 , "SELECT * FROM Table Emp" , false));
         questionOptions.add(new Option(1 , "SELECT * FROM Emp" , false));
         questionOptions.add(new Option(2 , "SELECT * FROM Emp Table" , false));
@@ -46,7 +43,7 @@ public class Util {
                 1 , 10 , 500 , 0 ,
                 questionOptions));
 
-        questionOptions.clear();
+        questionOptions = new ArrayList<>();
         questionOptions.add(new Option(0 , "DROP" , false));
         questionOptions.add(new Option(1 , "LOCK TABLE" , false));
         questionOptions.add(new Option(2 , "MERGE" , false));
@@ -54,10 +51,10 @@ public class Util {
 
         dmlQuestions.add(new Question(
                 1 ,"Which of the following is not DML statement?" ,
-                0 , 1000 , 500 , 0 ,
+                0 , 10 , 500 , 0 ,
                 questionOptions));
 
-        questionOptions.clear();
+        questionOptions = new ArrayList<>();
         questionOptions.add(new Option(0 , "SELECT Rename Salary to Sal FROM emp" , false));
         questionOptions.add(new Option(1 , "SELECT Salary to Sal FROM emp" , false));
         questionOptions.add(new Option(2 , "SELECT Salary AS Sal FROM emp" , false));
@@ -65,10 +62,10 @@ public class Util {
 
         dmlQuestions.add(new Question(
                 2 ,"If we want to select ' Salary '  from emp table , which should be display as Sal, what is the correct statement ?" ,
-                2 , 1000 , 500 , 0 ,
+                2 , 10 , 500 , 0 ,
                 questionOptions));
 
-        questionOptions.clear();
+        questionOptions = new ArrayList<>();
         questionOptions.add(new Option(0 , "SELECT count(*) FROM emp" , false));
         questionOptions.add(new Option(1 , "SELECT * FROM emp" , false));
         questionOptions.add(new Option(2 , "SELECT count(All) FROM emp" , false));
@@ -76,10 +73,10 @@ public class Util {
 
         dmlQuestions.add(new Question(
                 3 ,"Which one is correct statement to get the number of record in emp?" ,
-                0 , 1000 , 500 , 0 ,
+                0 , 10 , 500 , 0 ,
                 questionOptions));
 
-        questionOptions.clear();
+        questionOptions = new ArrayList<>();
         questionOptions.add(new Option(0 , "INSERT INTO Emp (Ename,Eno,Age)VALUES('Alex',12,23)" , false));
         questionOptions.add(new Option(1 , "INSERT INTO Emp (Ename,Eno,Age)VALUES(\"Alex\",12,23)" , false));
         questionOptions.add(new Option(2 , "INSERT INTO Emp VALUES('Alex',12,23)" , false));
@@ -87,28 +84,28 @@ public class Util {
 
         dmlQuestions.add(new Question(
                 4 ,"Emp table is having three column Ename,Eno and Age. Which are the correct insert statements to insert value?" ,
-                0 , 1000 , 500 , 0 ,
+                0 , 10 , 500 , 0 ,
                 questionOptions));
 
-        questionOptions.clear();
+        questionOptions = new ArrayList<>();
         questionOptions.add(new Option(0 , "Yes" , false));
         questionOptions.add(new Option(1 , "No" , false));
 
         dmlQuestions.add(new Question(
                 5 ,"Inserted value of a table can be rollback?" ,
-                0 , 1000 , 500 , 0 ,
+                0 , 10 , 500 , 0 ,
                 questionOptions));
 
-        questionOptions.clear();
+        questionOptions = new ArrayList<>();
         questionOptions.add(new Option(0 , "Yes" , false));
         questionOptions.add(new Option(1 , "No" , false));
 
         dmlQuestions.add(new Question(
                 6 ,"Can we insert multiple values to a table at a time?" ,
-                0 , 1000 , 500 , 0 ,
+                0 , 10 , 500 , 0 ,
                 questionOptions));
 
-        questionOptions.clear();
+        questionOptions = new ArrayList<>();
         questionOptions.add(new Option(0 , "UPDATE Customers SET CustmerName='Aled' Where empNo=10" , false));
         questionOptions.add(new Option(1 , "UPDATE table Customers SET CustmerName='Aled' Where empNo=10" , false));
         questionOptions.add(new Option(2 , "UPDATE Customers table SET CustmerName='Aled' Where empNo=10" , false));
@@ -116,10 +113,10 @@ public class Util {
 
         dmlQuestions.add(new Question(
                 7 ,"Which of the following is correct  update statement?" ,
-                0 , 1000 , 500 , 0 ,
+                0 , 10 , 500 , 0 ,
                 questionOptions));
 
-        questionOptions.clear();
+        questionOptions = new ArrayList<>();
         questionOptions.add(new Option(0 , "EXPLAIN PLAN" , false));
         questionOptions.add(new Option(1 , "CALL" , false));
         questionOptions.add(new Option(2 , "LOCK TABLE" , false));
@@ -127,28 +124,28 @@ public class Util {
 
         dmlQuestions.add(new Question(
                 8 ,"Which of the following is not  a DML statement?" ,
-                3 , 1000 , 500 , 0 ,
+                3 , 10 , 500 , 0 ,
                 questionOptions));
 
-        questionOptions.clear();
+        questionOptions = new ArrayList<>();
         questionOptions.add(new Option(0 , "Yes" , false));
         questionOptions.add(new Option(1 , "No" , false));
 
         dmlQuestions.add(new Question(
                 9 ,"Select   *  from Emp, Dept ; Is it possible to select records of both table like this?" ,
-                1 , 1000 , 500 , 0 ,
+                1 , 10 , 500 , 0 ,
                 questionOptions));
 
-        questionOptions.clear();
+        questionOptions = new ArrayList<>();
         questionOptions.add(new Option(0 , "Yes" , false));
         questionOptions.add(new Option(1 , "No" , false));
 
         dmlQuestions.add(new Question(
                 10 ,"Can we update more than one table value at a single time ?" ,
-                0 , 1000 , 500 , 0 ,
+                0 , 10 , 500 , 0 ,
                 questionOptions));
 
-        questionOptions.clear();
+        questionOptions = new ArrayList<>();
         questionOptions.add(new Option(0 , "DELETE" , false));
         questionOptions.add(new Option(1 , "CALL" , false));
         questionOptions.add(new Option(2 , "EXPLAIN PLAN" , false));
@@ -156,10 +153,10 @@ public class Util {
 
         dmlQuestions.add(new Question(
                 11 ,"Which DML statements are supported in PL/SQL only when executed dynamically ?" ,
-                3 , 1000 , 500 , 0 ,
+                3 , 10 , 500 , 0 ,
                 questionOptions));
 
-        questionOptions.clear();
+        questionOptions = new ArrayList<>();
         questionOptions.add(new Option(0 , "DELETE" , false));
         questionOptions.add(new Option(1 , "CALL" , false));
         questionOptions.add(new Option(2 , "EXPLAIN PLAN" , false));
@@ -167,10 +164,10 @@ public class Util {
 
         dmlQuestions.add(new Question(
                 11 ,"Which DML statements are supported in PL/SQL only when executed dynamically ?" ,
-                3 , 1000 , 500 , 0 ,
+                3 , 10 , 500 , 0 ,
                 questionOptions));
 
-        questionOptions.clear();
+        questionOptions = new ArrayList<>();
         questionOptions.add(new Option(0 , "SELECT sal / 12 FROM Emp" , false));
         questionOptions.add(new Option(1 , "SELECT sal / 12 AS monthly_salary FROM Emp" , false));
         questionOptions.add(new Option(2 , "SELECT (sal / 12) AS monthly_salary FROM Emp" , false));
@@ -178,10 +175,10 @@ public class Util {
 
         dmlQuestions.add(new Question(
                 12 ,"Which are the correct statement to get monthly salary of employees from Emp table ?" ,
-                2 , 1000 , 500 , 0 ,
+                2 , 10 , 500 , 0 ,
                 questionOptions));
 
-        questionOptions.clear();
+        questionOptions = new ArrayList<>();
         questionOptions.add(new Option(0 , "SELECT Emp_Name ,DeptNo FROM Emp, Dept" , false));
         questionOptions.add(new Option(1 , "select Empno ,Eeptno from Emp e, Dept d" , false));
         questionOptions.add(new Option(2 , "SELECT (sal / 12) AS monthly_salary FROM Emp" , false));
@@ -189,18 +186,16 @@ public class Util {
 
         dmlQuestions.add(new Question(
                 13 ,"Which of the following are correct statements to select Emp_Name and DeptNo from Emp and Dept table ?" ,
-                2 , 1000 , 500 , 0 ,
+                2 , 10 , 500 , 0 ,
                 questionOptions));
 
 
 
 
-        tests.add(new Test(0 ,0 , 0 , "dml" ,
-                dmlQuestions));
+
     }
 
     public static void setDdlQuestions (){
-        ArrayList<Question> ddlQuestions = new ArrayList<>();
         ArrayList<Option> questionOptions = new ArrayList<>();
 
         questionOptions.add(new Option(0 , "SELECT * FROM Table Emp" , false));
@@ -210,164 +205,163 @@ public class Util {
 
         ddlQuestions.add(new Question(
                 0 ,"What is the correct form of select all record from Emp table?" ,
-                1 , 10 , 500 , 0 ,
+                1 , 15 , 1000 , 0 ,
                 questionOptions));
 
-        questionOptions.clear();
-        questionOptions.add(new Option(0 , "DROP" , false));
-        questionOptions.add(new Option(1 , "LOCK TABLE" , false));
-        questionOptions.add(new Option(2 , "MERGE" , false));
-        questionOptions.add(new Option(3 , "UPDATE" , false));
+//        questionOptions = new ArrayList<>();
+//        questionOptions.add(new Option(0 , "DROP" , false));
+//        questionOptions.add(new Option(1 , "LOCK TABLE" , false));
+//        questionOptions.add(new Option(2 , "MERGE" , false));
+//        questionOptions.add(new Option(3 , "UPDATE" , false));
+//
+//        ddlQuestions.add(new Question(
+//                1 ,"Which of the following is not DML statement?" ,
+//                0 , 10 , 500 , 0 ,
+//                questionOptions));
 
-        ddlQuestions.add(new Question(
-                1 ,"Which of the following is not DML statement?" ,
-                0 , 1000 , 500 , 0 ,
-                questionOptions));
-
-        questionOptions.clear();
+        questionOptions = new ArrayList<>();
         questionOptions.add(new Option(0 , "SELECT Rename Salary to Sal FROM emp" , false));
         questionOptions.add(new Option(1 , "SELECT Salary to Sal FROM emp" , false));
         questionOptions.add(new Option(2 , "SELECT Salary AS Sal FROM emp" , false));
         questionOptions.add(new Option(3 , "All the above" , false));
 
         ddlQuestions.add(new Question(
-                2 ,"If we want to select ' Salary '  from emp table , which should be display as Sal, what is the correct statement ?" ,
-                2 , 1000 , 500 , 0 ,
+                1 ,"If we want to select ' Salary '  from emp table , which should be display as Sal, what is the correct statement ?" ,
+                2 , 15 , 1000 , 0 ,
                 questionOptions));
 
-        questionOptions.clear();
+        questionOptions = new ArrayList<>();
         questionOptions.add(new Option(0 , "SELECT count(*) FROM emp" , false));
         questionOptions.add(new Option(1 , "SELECT * FROM emp" , false));
         questionOptions.add(new Option(2 , "SELECT count(All) FROM emp" , false));
         questionOptions.add(new Option(3 , "All the above" , false));
 
         ddlQuestions.add(new Question(
-                3 ,"Which one is correct statement to get the number of record in emp?" ,
-                0 , 1000 , 500 , 0 ,
+                2 ,"Which one is correct statement to get the number of record in emp?" ,
+                0 , 15 , 1000 , 0 ,
                 questionOptions));
 
-        questionOptions.clear();
-        questionOptions.add(new Option(0 , "INSERT INTO Emp (Ename,Eno,Age)VALUES('Alex',12,23)" , false));
-        questionOptions.add(new Option(1 , "INSERT INTO Emp (Ename,Eno,Age)VALUES(\"Alex\",12,23)" , false));
-        questionOptions.add(new Option(2 , "INSERT INTO Emp VALUES('Alex',12,23)" , false));
+        questionOptions = new ArrayList<>();
+        questionOptions.add(new Option(0 , "INSERT INTO Emp (Ename,Eno,Age)VALUES(\"Alex\",12,23)" , false));
+        questionOptions.add(new Option(1 , "INSERT INTO Emp VALUES('Alex',12,23)" , false));
+        questionOptions.add(new Option(2 , "INSERT INTO Emp (Ename,Eno,Age)VALUES('Alex',12,23)" , false));
         questionOptions.add(new Option(3 , "INSERT INTO Emp VALUES(\"Alex\",12,23)" , false));
 
         ddlQuestions.add(new Question(
-                4 ,"Emp table is having three column Ename,Eno and Age. Which are the correct insert statements to insert value?" ,
-                0 , 1000 , 500 , 0 ,
+                3 ,"Emp table is having three column Ename,Eno and Age. Which are the correct insert statements to insert value?" ,
+                2 , 15 , 1000 , 0 ,
                 questionOptions));
 
-        questionOptions.clear();
+        questionOptions = new ArrayList<>();
         questionOptions.add(new Option(0 , "Yes" , false));
         questionOptions.add(new Option(1 , "No" , false));
 
         ddlQuestions.add(new Question(
-                5 ,"Inserted value of a table can be rollback?" ,
-                0 , 1000 , 500 , 0 ,
+                4 ,"Inserted value of a table can be rollback?" ,
+                0 , 5 , 500 , 0 ,
                 questionOptions));
 
-        questionOptions.clear();
+        questionOptions = new ArrayList<>();
         questionOptions.add(new Option(0 , "Yes" , false));
         questionOptions.add(new Option(1 , "No" , false));
 
         ddlQuestions.add(new Question(
-                6 ,"Can we insert multiple values to a table at a time?" ,
-                0 , 1000 , 500 , 0 ,
+                5 ,"Can we insert multiple values to a table at a time?" ,
+                0 , 5 , 500 , 0 ,
                 questionOptions));
 
-        questionOptions.clear();
-        questionOptions.add(new Option(0 , "UPDATE Customers SET CustmerName='Aled' Where empNo=10" , false));
-        questionOptions.add(new Option(1 , "UPDATE table Customers SET CustmerName='Aled' Where empNo=10" , false));
-        questionOptions.add(new Option(2 , "UPDATE Customers table SET CustmerName='Aled' Where empNo=10" , false));
-        questionOptions.add(new Option(3 , "UPDATE Customers SET CustmerName='Aled' as empNo=10" , false));
+        questionOptions = new ArrayList<>();
+        questionOptions.add(new Option(0 , "UPDATE table Customers SET CustmerName='Aled' Where empNo=10" , false));
+        questionOptions.add(new Option(1 , "UPDATE Customers table SET CustmerName='Aled' Where empNo=10" , false));
+        questionOptions.add(new Option(2 , "UPDATE Customers SET CustmerName='Aled' as empNo=10" , false));
+        questionOptions.add(new Option(3 , "UPDATE Customers SET CustmerName='Aled' Where empNo=10" , false));
+
 
         ddlQuestions.add(new Question(
-                7 ,"Which of the following is correct  update statement?" ,
-                0 , 1000 , 500 , 0 ,
+                6 ,"Which of the following is correct  update statement?" ,
+                3 , 15 , 1000 , 0 ,
                 questionOptions));
 
-        questionOptions.clear();
+        questionOptions = new ArrayList<>();
         questionOptions.add(new Option(0 , "EXPLAIN PLAN" , false));
         questionOptions.add(new Option(1 , "CALL" , false));
         questionOptions.add(new Option(2 , "LOCK TABLE" , false));
         questionOptions.add(new Option(3 , "None of above" , false));
 
         ddlQuestions.add(new Question(
-                8 ,"Which of the following is not  a DML statement?" ,
-                3 , 1000 , 500 , 0 ,
+                7 ,"Which of the following is not  a DML statement?" ,
+                3 , 10 , 800 , 0 ,
                 questionOptions));
 
-        questionOptions.clear();
+        questionOptions = new ArrayList<>();
         questionOptions.add(new Option(0 , "Yes" , false));
         questionOptions.add(new Option(1 , "No" , false));
 
         ddlQuestions.add(new Question(
-                9 ,"Select   *  from Emp, Dept ; Is it possible to select records of both table like this?" ,
-                1 , 1000 , 500 , 0 ,
+                8 ,"Select   *  from Emp, Dept ; Is it possible to select records of both table like this?" ,
+                1 , 10 , 800 , 0 ,
                 questionOptions));
 
-        questionOptions.clear();
+        questionOptions = new ArrayList<>();
         questionOptions.add(new Option(0 , "Yes" , false));
         questionOptions.add(new Option(1 , "No" , false));
 
         ddlQuestions.add(new Question(
-                10 ,"Can we update more than one table value at a single time ?" ,
-                0 , 1000 , 500 , 0 ,
+                9 ,"Can we update more than one table value at a single time ?" ,
+                0 , 5 , 500 , 0 ,
                 questionOptions));
 
-        questionOptions.clear();
-        questionOptions.add(new Option(0 , "DELETE" , false));
-        questionOptions.add(new Option(1 , "CALL" , false));
-        questionOptions.add(new Option(2 , "EXPLAIN PLAN" , false));
-        questionOptions.add(new Option(3 , "None of above" , false));
+//        questionOptions = new ArrayList<>();
+//        questionOptions.add(new Option(0 , "DELETE" , false));
+//        questionOptions.add(new Option(1 , "CALL" , false));
+//        questionOptions.add(new Option(2 , "EXPLAIN PLAN" , false));
+//        questionOptions.add(new Option(3 , "None of above" , false));
+//
+//        ddlQuestions.add(new Question(
+//                11 ,"Which DML statements are supported in PL/SQL only when executed dynamically ?" ,
+//                3 , 10 , 500 , 0 ,
+//                questionOptions));
+//
+//        questionOptions = new ArrayList<>();
+//        questionOptions.add(new Option(0 , "DELETE" , false));
+//        questionOptions.add(new Option(1 , "CALL" , false));
+//        questionOptions.add(new Option(2 , "EXPLAIN PLAN" , false));
+//        questionOptions.add(new Option(3 , "None of above" , false));
+//
+//        ddlQuestions.add(new Question(
+//                11 ,"Which DML statements are supported in PL/SQL only when executed dynamically ?" ,
+//                3 , 10 , 500 , 0 ,
+//                questionOptions));
+//
+//        questionOptions = new ArrayList<>();
+//        questionOptions.add(new Option(0 , "SELECT sal / 12 FROM Emp" , false));
+//        questionOptions.add(new Option(1 , "SELECT sal / 12 AS monthly_salary FROM Emp" , false));
+//        questionOptions.add(new Option(2 , "SELECT (sal / 12) AS monthly_salary FROM Emp" , false));
+//        questionOptions.add(new Option(3 , "All the Above" , false));
+//
+//        ddlQuestions.add(new Question(
+//                12 ,"Which are the correct statement to get monthly salary of employees from Emp table ?" ,
+//                2 , 10 , 500 , 0 ,
+//                questionOptions));
+//
+//        questionOptions = new ArrayList<>();
+//        questionOptions.add(new Option(0 , "SELECT Emp_Name ,DeptNo FROM Emp, Dept" , false));
+//        questionOptions.add(new Option(1 , "select Empno ,Eeptno from Emp e, Dept d" , false));
+//        questionOptions.add(new Option(2 , "SELECT (sal / 12) AS monthly_salary FROM Emp" , false));
+//        questionOptions.add(new Option(3 , "All the Above" , false));
+//
+//        ddlQuestions.add(new Question(
+//                13 ,"Which of the following are correct statements to select Emp_Name and DeptNo from Emp and Dept table ?" ,
+//                2 , 10 , 500 , 0 ,
+//                questionOptions));
+//
+//
+//
 
-        ddlQuestions.add(new Question(
-                11 ,"Which DML statements are supported in PL/SQL only when executed dynamically ?" ,
-                3 , 1000 , 500 , 0 ,
-                questionOptions));
 
-        questionOptions.clear();
-        questionOptions.add(new Option(0 , "DELETE" , false));
-        questionOptions.add(new Option(1 , "CALL" , false));
-        questionOptions.add(new Option(2 , "EXPLAIN PLAN" , false));
-        questionOptions.add(new Option(3 , "None of above" , false));
-
-        ddlQuestions.add(new Question(
-                11 ,"Which DML statements are supported in PL/SQL only when executed dynamically ?" ,
-                3 , 1000 , 500 , 0 ,
-                questionOptions));
-
-        questionOptions.clear();
-        questionOptions.add(new Option(0 , "SELECT sal / 12 FROM Emp" , false));
-        questionOptions.add(new Option(1 , "SELECT sal / 12 AS monthly_salary FROM Emp" , false));
-        questionOptions.add(new Option(2 , "SELECT (sal / 12) AS monthly_salary FROM Emp" , false));
-        questionOptions.add(new Option(3 , "All the Above" , false));
-
-        ddlQuestions.add(new Question(
-                12 ,"Which are the correct statement to get monthly salary of employees from Emp table ?" ,
-                2 , 1000 , 500 , 0 ,
-                questionOptions));
-
-        questionOptions.clear();
-        questionOptions.add(new Option(0 , "SELECT Emp_Name ,DeptNo FROM Emp, Dept" , false));
-        questionOptions.add(new Option(1 , "select Empno ,Eeptno from Emp e, Dept d" , false));
-        questionOptions.add(new Option(2 , "SELECT (sal / 12) AS monthly_salary FROM Emp" , false));
-        questionOptions.add(new Option(3 , "All the Above" , false));
-
-        ddlQuestions.add(new Question(
-                13 ,"Which of the following are correct statements to select Emp_Name and DeptNo from Emp and Dept table ?" ,
-                2 , 1000 , 500 , 0 ,
-                questionOptions));
-
-
-
-
-        tests.add(new Test(0 ,0 , 0 , "ddl" ,
-                ddlQuestions));
     }
 
     public static void setAfQuestions (){
-        ArrayList<Question> afQuestions = new ArrayList<>();
         ArrayList<Option> questionOptions = new ArrayList<>();
 
         questionOptions.add(new Option(0 , "SELECT * FROM Table Emp" , false));
@@ -380,7 +374,7 @@ public class Util {
                 1 , 10 , 500 , 0 ,
                 questionOptions));
 
-        questionOptions.clear();
+        questionOptions = new ArrayList<>();
         questionOptions.add(new Option(0 , "DROP" , false));
         questionOptions.add(new Option(1 , "LOCK TABLE" , false));
         questionOptions.add(new Option(2 , "MERGE" , false));
@@ -391,7 +385,7 @@ public class Util {
                 0 , 1000 , 500 , 0 ,
                 questionOptions));
 
-        questionOptions.clear();
+        questionOptions = new ArrayList<>();
         questionOptions.add(new Option(0 , "SELECT Rename Salary to Sal FROM emp" , false));
         questionOptions.add(new Option(1 , "SELECT Salary to Sal FROM emp" , false));
         questionOptions.add(new Option(2 , "SELECT Salary AS Sal FROM emp" , false));
@@ -402,7 +396,7 @@ public class Util {
                 2 , 1000 , 500 , 0 ,
                 questionOptions));
 
-        questionOptions.clear();
+        questionOptions = new ArrayList<>();
         questionOptions.add(new Option(0 , "SELECT count(*) FROM emp" , false));
         questionOptions.add(new Option(1 , "SELECT * FROM emp" , false));
         questionOptions.add(new Option(2 , "SELECT count(All) FROM emp" , false));
@@ -413,7 +407,7 @@ public class Util {
                 0 , 1000 , 500 , 0 ,
                 questionOptions));
 
-        questionOptions.clear();
+        questionOptions = new ArrayList<>();
         questionOptions.add(new Option(0 , "INSERT INTO Emp (Ename,Eno,Age)VALUES('Alex',12,23)" , false));
         questionOptions.add(new Option(1 , "INSERT INTO Emp (Ename,Eno,Age)VALUES(\"Alex\",12,23)" , false));
         questionOptions.add(new Option(2 , "INSERT INTO Emp VALUES('Alex',12,23)" , false));
@@ -424,7 +418,7 @@ public class Util {
                 0 , 1000 , 500 , 0 ,
                 questionOptions));
 
-        questionOptions.clear();
+        questionOptions = new ArrayList<>();
         questionOptions.add(new Option(0 , "Yes" , false));
         questionOptions.add(new Option(1 , "No" , false));
 
@@ -433,7 +427,7 @@ public class Util {
                 0 , 1000 , 500 , 0 ,
                 questionOptions));
 
-        questionOptions.clear();
+        questionOptions = new ArrayList<>();
         questionOptions.add(new Option(0 , "Yes" , false));
         questionOptions.add(new Option(1 , "No" , false));
 
@@ -442,7 +436,7 @@ public class Util {
                 0 , 1000 , 500 , 0 ,
                 questionOptions));
 
-        questionOptions.clear();
+        questionOptions = new ArrayList<>();
         questionOptions.add(new Option(0 , "UPDATE Customers SET CustmerName='Aled' Where empNo=10" , false));
         questionOptions.add(new Option(1 , "UPDATE table Customers SET CustmerName='Aled' Where empNo=10" , false));
         questionOptions.add(new Option(2 , "UPDATE Customers table SET CustmerName='Aled' Where empNo=10" , false));
@@ -453,7 +447,7 @@ public class Util {
                 0 , 1000 , 500 , 0 ,
                 questionOptions));
 
-        questionOptions.clear();
+        questionOptions = new ArrayList<>();
         questionOptions.add(new Option(0 , "EXPLAIN PLAN" , false));
         questionOptions.add(new Option(1 , "CALL" , false));
         questionOptions.add(new Option(2 , "LOCK TABLE" , false));
@@ -464,7 +458,7 @@ public class Util {
                 3 , 1000 , 500 , 0 ,
                 questionOptions));
 
-        questionOptions.clear();
+        questionOptions = new ArrayList<>();
         questionOptions.add(new Option(0 , "Yes" , false));
         questionOptions.add(new Option(1 , "No" , false));
 
@@ -473,7 +467,7 @@ public class Util {
                 1 , 1000 , 500 , 0 ,
                 questionOptions));
 
-        questionOptions.clear();
+        questionOptions = new ArrayList<>();
         questionOptions.add(new Option(0 , "Yes" , false));
         questionOptions.add(new Option(1 , "No" , false));
 
@@ -482,7 +476,7 @@ public class Util {
                 0 , 1000 , 500 , 0 ,
                 questionOptions));
 
-        questionOptions.clear();
+        questionOptions = new ArrayList<>();
         questionOptions.add(new Option(0 , "DELETE" , false));
         questionOptions.add(new Option(1 , "CALL" , false));
         questionOptions.add(new Option(2 , "EXPLAIN PLAN" , false));
@@ -493,7 +487,7 @@ public class Util {
                 3 , 1000 , 500 , 0 ,
                 questionOptions));
 
-        questionOptions.clear();
+        questionOptions = new ArrayList<>();
         questionOptions.add(new Option(0 , "DELETE" , false));
         questionOptions.add(new Option(1 , "CALL" , false));
         questionOptions.add(new Option(2 , "EXPLAIN PLAN" , false));
@@ -504,7 +498,7 @@ public class Util {
                 3 , 1000 , 500 , 0 ,
                 questionOptions));
 
-        questionOptions.clear();
+        questionOptions = new ArrayList<>();
         questionOptions.add(new Option(0 , "SELECT sal / 12 FROM Emp" , false));
         questionOptions.add(new Option(1 , "SELECT sal / 12 AS monthly_salary FROM Emp" , false));
         questionOptions.add(new Option(2 , "SELECT (sal / 12) AS monthly_salary FROM Emp" , false));
@@ -515,7 +509,7 @@ public class Util {
                 2 , 1000 , 500 , 0 ,
                 questionOptions));
 
-        questionOptions.clear();
+        questionOptions = new ArrayList<>();
         questionOptions.add(new Option(0 , "SELECT Emp_Name ,DeptNo FROM Emp, Dept" , false));
         questionOptions.add(new Option(1 , "select Empno ,Eeptno from Emp e, Dept d" , false));
         questionOptions.add(new Option(2 , "SELECT (sal / 12) AS monthly_salary FROM Emp" , false));
@@ -529,12 +523,10 @@ public class Util {
 
 
 
-        tests.add(new Test(0 ,0 , 0 , "af" ,
-                afQuestions));
+
     }
 
     public static void setAcfQuestions (){
-        ArrayList<Question> acfQuestions = new ArrayList<>();
         ArrayList<Option> questionOptions = new ArrayList<>();
 
         questionOptions.add(new Option(0 , "SELECT * FROM Table Emp" , false));
@@ -547,7 +539,7 @@ public class Util {
                 1 , 10 , 500 , 0 ,
                 questionOptions));
 
-        questionOptions.clear();
+        questionOptions = new ArrayList<>();
         questionOptions.add(new Option(0 , "DROP" , false));
         questionOptions.add(new Option(1 , "LOCK TABLE" , false));
         questionOptions.add(new Option(2 , "MERGE" , false));
@@ -555,10 +547,10 @@ public class Util {
 
         acfQuestions.add(new Question(
                 1 ,"Which of the following is not DML statement?" ,
-                0 , 1000 , 500 , 0 ,
+                0 , 10 , 500 , 0 ,
                 questionOptions));
 
-        questionOptions.clear();
+        questionOptions = new ArrayList<>();
         questionOptions.add(new Option(0 , "SELECT Rename Salary to Sal FROM emp" , false));
         questionOptions.add(new Option(1 , "SELECT Salary to Sal FROM emp" , false));
         questionOptions.add(new Option(2 , "SELECT Salary AS Sal FROM emp" , false));
@@ -566,10 +558,10 @@ public class Util {
 
         acfQuestions.add(new Question(
                 2 ,"If we want to select ' Salary '  from emp table , which should be display as Sal, what is the correct statement ?" ,
-                2 , 1000 , 500 , 0 ,
+                2 , 10 , 500 , 0 ,
                 questionOptions));
 
-        questionOptions.clear();
+        questionOptions = new ArrayList<>();
         questionOptions.add(new Option(0 , "SELECT count(*) FROM emp" , false));
         questionOptions.add(new Option(1 , "SELECT * FROM emp" , false));
         questionOptions.add(new Option(2 , "SELECT count(All) FROM emp" , false));
@@ -577,10 +569,10 @@ public class Util {
 
         acfQuestions.add(new Question(
                 3 ,"Which one is correct statement to get the number of record in emp?" ,
-                0 , 1000 , 500 , 0 ,
+                0 , 10 , 500 , 0 ,
                 questionOptions));
 
-        questionOptions.clear();
+        questionOptions = new ArrayList<>();
         questionOptions.add(new Option(0 , "INSERT INTO Emp (Ename,Eno,Age)VALUES('Alex',12,23)" , false));
         questionOptions.add(new Option(1 , "INSERT INTO Emp (Ename,Eno,Age)VALUES(\"Alex\",12,23)" , false));
         questionOptions.add(new Option(2 , "INSERT INTO Emp VALUES('Alex',12,23)" , false));
@@ -588,28 +580,28 @@ public class Util {
 
         acfQuestions.add(new Question(
                 4 ,"Emp table is having three column Ename,Eno and Age. Which are the correct insert statements to insert value?" ,
-                0 , 1000 , 500 , 0 ,
+                0 , 10 , 500 , 0 ,
                 questionOptions));
 
-        questionOptions.clear();
+        questionOptions = new ArrayList<>();
         questionOptions.add(new Option(0 , "Yes" , false));
         questionOptions.add(new Option(1 , "No" , false));
 
         acfQuestions.add(new Question(
                 5 ,"Inserted value of a table can be rollback?" ,
-                0 , 1000 , 500 , 0 ,
+                0 , 10 , 500 , 0 ,
                 questionOptions));
 
-        questionOptions.clear();
+        questionOptions = new ArrayList<>();
         questionOptions.add(new Option(0 , "Yes" , false));
         questionOptions.add(new Option(1 , "No" , false));
 
         acfQuestions.add(new Question(
                 6 ,"Can we insert multiple values to a table at a time?" ,
-                0 , 1000 , 500 , 0 ,
+                0 , 10 , 500 , 0 ,
                 questionOptions));
 
-        questionOptions.clear();
+        questionOptions = new ArrayList<>();
         questionOptions.add(new Option(0 , "UPDATE Customers SET CustmerName='Aled' Where empNo=10" , false));
         questionOptions.add(new Option(1 , "UPDATE table Customers SET CustmerName='Aled' Where empNo=10" , false));
         questionOptions.add(new Option(2 , "UPDATE Customers table SET CustmerName='Aled' Where empNo=10" , false));
@@ -617,10 +609,10 @@ public class Util {
 
         acfQuestions.add(new Question(
                 7 ,"Which of the following is correct  update statement?" ,
-                0 , 1000 , 500 , 0 ,
+                0 , 10 , 500 , 0 ,
                 questionOptions));
 
-        questionOptions.clear();
+        questionOptions = new ArrayList<>();
         questionOptions.add(new Option(0 , "EXPLAIN PLAN" , false));
         questionOptions.add(new Option(1 , "CALL" , false));
         questionOptions.add(new Option(2 , "LOCK TABLE" , false));
@@ -628,28 +620,28 @@ public class Util {
 
         acfQuestions.add(new Question(
                 8 ,"Which of the following is not  a DML statement?" ,
-                3 , 1000 , 500 , 0 ,
+                3 , 10 , 500 , 0 ,
                 questionOptions));
 
-        questionOptions.clear();
+        questionOptions = new ArrayList<>();
         questionOptions.add(new Option(0 , "Yes" , false));
         questionOptions.add(new Option(1 , "No" , false));
 
         acfQuestions.add(new Question(
                 9 ,"Select   *  from Emp, Dept ; Is it possible to select records of both table like this?" ,
-                1 , 1000 , 500 , 0 ,
+                1 , 10 , 500 , 0 ,
                 questionOptions));
 
-        questionOptions.clear();
+        questionOptions = new ArrayList<>();
         questionOptions.add(new Option(0 , "Yes" , false));
         questionOptions.add(new Option(1 , "No" , false));
 
         acfQuestions.add(new Question(
                 10 ,"Can we update more than one table value at a single time ?" ,
-                0 , 1000 , 500 , 0 ,
+                0 , 10 , 500 , 0 ,
                 questionOptions));
 
-        questionOptions.clear();
+        questionOptions = new ArrayList<>();
         questionOptions.add(new Option(0 , "DELETE" , false));
         questionOptions.add(new Option(1 , "CALL" , false));
         questionOptions.add(new Option(2 , "EXPLAIN PLAN" , false));
@@ -657,10 +649,10 @@ public class Util {
 
         acfQuestions.add(new Question(
                 11 ,"Which DML statements are supported in PL/SQL only when executed dynamically ?" ,
-                3 , 1000 , 500 , 0 ,
+                3 , 10 , 500 , 0 ,
                 questionOptions));
 
-        questionOptions.clear();
+        questionOptions = new ArrayList<>();
         questionOptions.add(new Option(0 , "DELETE" , false));
         questionOptions.add(new Option(1 , "CALL" , false));
         questionOptions.add(new Option(2 , "EXPLAIN PLAN" , false));
@@ -668,10 +660,10 @@ public class Util {
 
         acfQuestions.add(new Question(
                 11 ,"Which DML statements are supported in PL/SQL only when executed dynamically ?" ,
-                3 , 1000 , 500 , 0 ,
+                3 , 10 , 500 , 0 ,
                 questionOptions));
 
-        questionOptions.clear();
+        questionOptions = new ArrayList<>();
         questionOptions.add(new Option(0 , "SELECT sal / 12 FROM Emp" , false));
         questionOptions.add(new Option(1 , "SELECT sal / 12 AS monthly_salary FROM Emp" , false));
         questionOptions.add(new Option(2 , "SELECT (sal / 12) AS monthly_salary FROM Emp" , false));
@@ -679,10 +671,10 @@ public class Util {
 
         acfQuestions.add(new Question(
                 12 ,"Which are the correct statement to get monthly salary of employees from Emp table ?" ,
-                2 , 1000 , 500 , 0 ,
+                2 , 10 , 500 , 0 ,
                 questionOptions));
 
-        questionOptions.clear();
+        questionOptions = new ArrayList<>();
         questionOptions.add(new Option(0 , "SELECT Emp_Name ,DeptNo FROM Emp, Dept" , false));
         questionOptions.add(new Option(1 , "select Empno ,Eeptno from Emp e, Dept d" , false));
         questionOptions.add(new Option(2 , "SELECT (sal / 12) AS monthly_salary FROM Emp" , false));
@@ -690,16 +682,33 @@ public class Util {
 
         acfQuestions.add(new Question(
                 13 ,"Which of the following are correct statements to select Emp_Name and DeptNo from Emp and Dept table ?" ,
-                2 , 1000 , 500 , 0 ,
+                2 , 10 , 500 , 0 ,
                 questionOptions));
 
 
 
 
-        tests.add(new Test(0 ,0 , 0 , "acf" ,
-                acfQuestions));
+
     }
 
+    public static void setTests(){
+        if(tests.size() == 0){
+            setDmlQuestions();
+            setDdlQuestions();
+            setAfQuestions();
+            setAcfQuestions();
+
+            tests.add(new Test(0 ,0 , 0 , "ddl" , 0 ,
+                    ddlQuestions));
+            tests.add(new Test(0 ,0 , 0 , "dml" , 0 ,
+                    dmlQuestions));
+            tests.add(new Test(0 ,0 , 0 ,  "af" , 0 ,
+                    afQuestions));
+            tests.add(new Test(0 ,0 , 0 , "acf" , 0 ,
+                    acfQuestions));
+
+        }
+    }
 
     public static ArrayList<Test> getTests() {
         return tests;

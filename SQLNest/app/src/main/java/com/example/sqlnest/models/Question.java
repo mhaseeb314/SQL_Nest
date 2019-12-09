@@ -2,9 +2,10 @@ package com.example.sqlnest.models;
 
 import androidx.annotation.Nullable;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Question {
+public class Question implements Serializable {
 
     private int id;
     private String question;
@@ -22,6 +23,13 @@ public class Question {
         this.questionScore = 0;
         this.gainScore = 0;
         this.options = new ArrayList<>();
+    }
+
+    public void setToDefault(){
+
+        for (int i = 0; i < options.size() - 1; i++) {
+            options.get(i).setSelectedOption(false);
+        }
     }
 
     public Question(int id, String question,

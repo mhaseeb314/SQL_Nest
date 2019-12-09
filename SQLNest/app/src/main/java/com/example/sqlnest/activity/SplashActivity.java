@@ -20,10 +20,7 @@ public class SplashActivity extends AppCompatActivity {
         setContentView(R.layout.activity_splash);
 
 
-        Util.setDmlQuestions();
-        Util.setDdlQuestions();
-        Util.setAfQuestions();
-        Util.setAcfQuestions();
+        Util.setTests();
 
         handler = new Handler();
         runnable = new Runnable() {

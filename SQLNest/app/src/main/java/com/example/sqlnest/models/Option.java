@@ -1,6 +1,8 @@
 package com.example.sqlnest.models;
 
-public class Option {
+import java.io.Serializable;
+
+public class Option implements Serializable {
 
     private int id;
     private String option;

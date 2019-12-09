@@ -4,6 +4,7 @@
     <color name="colorPrimaryDark">#3A559F</color>
     <color name="colorAccent">#3A559F</color>
 
+    <color name="gray">#CCCCCC</color>
     <color name="blue">#3A559F</color>
     <color name="red">#D54E41</color>
     <color name="lightRed">#FFA3A0</color>
@@ -22,6 +23,8 @@
     <color name="marine">#A1FFD9</color>
     <color name="pulm">#C484C4</color>
     <color name="lightPulm">#FACDFA</color>
+    <color name="yellow">#a0ffcb00</color>
+    <color name="black">#6F6666</color>
 
 
 </resources>

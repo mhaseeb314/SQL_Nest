@@ -9,11 +9,14 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -32,36 +35,48 @@ import java.util.ArrayList;
 public class QuizFragment extends Fragment implements QuizAdapter.ItemClickListener , View.OnClickListener {
 
     @Override
-    public void onDetail(Test test) {
+    public void onDetail(Test test , int position) {
 
+        if(position == 0){
+            GameplayFragment gamePlayFrgment = new GameplayFragment().newInstance(test);
+            Util.replaceFragment(gamePlayFrgment , GameplayFragment.class.getSimpleName(),
+                    true ,
+                    false ,
+                    getActivity());
+        }else{
+            Toast.makeText(getContext(), "Under Development", Toast.LENGTH_SHORT).show();
+        }
     }
 
     @Override
     public void onClick(View view) {
         switch (view.getId()){
 
-//            case R.id.rlMixTest : {
+            case R.id.rlMixTest : {
 //                GameplayFragment gamePlayFrgment = new GameplayFragment();
 //                Util.replaceFragment(gamePlayFrgment , GameplayFragment.class.getSimpleName(),
 //                        true ,
 //                        false ,
 //                        getActivity());
-//            }
-//            break;
+                Toast.makeText(getContext(), "Under Development", Toast.LENGTH_SHORT).show();
+            }
+            break;
         }
     }
 
     Window window;
-//    QuizAdapter adapter;
-//    ArrayList<Test> tests = new ArrayList<>();
-//    RecyclerView rvQuiz;
-//    RelativeLayout rlMixTest;
+    QuizAdapter adapter;
+    ArrayList<Test> tests = new ArrayList<>();
+    RecyclerView rvQuiz;
+    RelativeLayout rlMixTest;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-//        tests = Util.getTests();
+        if(tests.size() == 0){
+            tests = Util.getTests();
+        }
         window = getActivity().getWindow();
         window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
@@ -76,25 +91,25 @@ public class QuizFragment extends Fragment implements QuizAdapter.ItemClickListe
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-//        rlMixTest = view.findViewById(R.id.rlMixTest);
-//        rlMixTest.setOnClickListener(this);
-//        findViewById(view);
-//        setAdapter();
+        findViewById(view);
+        setAdapter();
         setToolbar();
+        rlMixTest.setOnClickListener(this);
     }
 
-//    private void findViewById(View view) {
-//        rvQuiz = view.findViewById(R.id.rvQuiz);
-//    }
+    private void findViewById(View view) {
+        rlMixTest = view.findViewById(R.id.rlMixTest);
+        rvQuiz = view.findViewById(R.id.rvQuiz);
+    }
 
-//    private void setAdapter() {
-//        adapter = new QuizAdapter(getContext(), tests, this);
-//        rvQuiz.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
-//        rvQuiz.addItemDecoration(new ListSpacingDecoration((int) getResources().getDimension(R.dimen.recycler_view_grid_spacing)));
-//        rvQuiz.setAdapter(adapter);
-//
-//
-//    }
+    private void setAdapter() {
+        adapter = new QuizAdapter(getContext(), tests, this);
+        rvQuiz.setLayoutManager(new GridLayoutManager(getContext() , 2));
+        rvQuiz.addItemDecoration(new ListSpacingDecoration((int) getResources().getDimension(R.dimen.recycler_view_grid_spacing)));
+        rvQuiz.setAdapter(adapter);
+
+
+    }
 
     private void setToolbar() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -104,6 +119,5 @@ public class QuizFragment extends Fragment implements QuizAdapter.ItemClickListe
         ((MainActivity) getActivity()).tvToolbar.setText(getString(R.string.quiz));
         ((MainActivity) getActivity()).tvToolbar.setBackgroundColor(getResources().getColor(R.color.red));
     }
-
 
 }
