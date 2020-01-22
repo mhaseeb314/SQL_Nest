@@ -10,10 +10,7 @@
     <string name="af">Aggregate Functions</string>
     <string name="acf">Additional Clauses Functions</string>
     <string name="under_development">Under Development</string>
-    <string name="result">Result</string>
-    <string name="test">Test</string>
-    <string name="mix_test">Mix Test</string>
-    <string name="ddl_full">Data Definition Language</string>
-    <string name="dml_full">Data Manupilation Language</string>
+    <string name="db_operations">Database Operations</string>
+    <string name="operations">Operations</string>
 
 </resources>

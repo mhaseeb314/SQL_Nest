@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/tvID"
+            style="@style/TableTextView.Style"
+            android:layout_weight="0.5"
+            android:text="ID" />
+
+        <TextView
+            android:id="@+id/tvName"
+            style="@style/TableTextView.Style"
+            android:text="Name"/>
+
+        <TextView
+            android:id="@+id/tvCity"
+            style="@style/TableTextView.Style"
+            android:text="City"/>
+
+        <TextView
+            android:id="@+id/tvCountry"
+            style="@style/TableTextView.Style"
+            android:text="Country"/>
+
+    </LinearLayout>
+
+    <View
+        android:id="@+id/view"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/gray"
+        />
+
+
+
+</LinearLayout>

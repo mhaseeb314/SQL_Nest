@@ -6,7 +6,6 @@ import android.os.Handler;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import com.example.sqlnest.R;
-import com.example.sqlnest.utils.Util;
 
 public class SplashActivity extends AppCompatActivity {
 
@@ -20,7 +19,6 @@ public class SplashActivity extends AppCompatActivity {
         setContentView(R.layout.activity_splash);
 
 
-        Util.setTests();
 
         handler = new Handler();
         runnable = new Runnable() {

@@ -14,13 +14,10 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.sqlnest.R;
 import com.example.sqlnest.activity.MainActivity;
 import com.example.sqlnest.utils.Util;
-
-import org.w3c.dom.Text;
 
 
 public class HomeFragment extends Fragment implements View.OnClickListener {
@@ -35,8 +32,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
 
         }else if (v.getId() == R.id.tvQuiz){
 
-            QuizFragment quizFragment = new QuizFragment();
-            Util.replaceFragment(quizFragment , QuizFragment.class.getSimpleName(),
+            OperationsFragment operationsFragment = new OperationsFragment();
+            Util.replaceFragment(operationsFragment, OperationsFragment.class.getSimpleName(),
                     true , false,
                     getActivity());
 
