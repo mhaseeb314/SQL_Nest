@@ -1,6 +1,8 @@
 package com.example.sqlnest.fragment;
 
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 
@@ -89,4 +91,5 @@ public class OperationsFragment extends Fragment implements View.OnClickListener
         PlayFragment playFragment = new PlayFragment().newInstance(requestCode);
         Util.replaceFragment(playFragment, PlayFragment.class.getSimpleName(), true , false, getActivity());
     }
+
 }

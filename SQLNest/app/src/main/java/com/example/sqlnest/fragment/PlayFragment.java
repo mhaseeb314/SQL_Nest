@@ -1,8 +1,11 @@
 package com.example.sqlnest.fragment;
 
 
+import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
@@ -13,6 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.Switch;
 import android.widget.TableLayout;
@@ -50,6 +54,9 @@ public class PlayFragment extends Fragment {
     private final String UNKNOWN_ATTRIBUTE = "Unknown Attribute";
     private final String MISSING_ATTRIBUTE = "Write At Least Attribute";
 
+    SharedPreferences pref;
+    SharedPreferences.Editor editor;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,7 +75,7 @@ public class PlayFragment extends Fragment {
 
         init(view);
         setUI();
-        setAdapter(true, true, true, true,true);
+        setAdapter(true, true, true, true, true);
     }
 
     private void init(View view) {
@@ -81,9 +88,13 @@ public class PlayFragment extends Fragment {
         tvCity = view.findViewById(R.id.tvCity);
         tvCountry = view.findViewById(R.id.tvCountry);
 
+        pref = getContext().getSharedPreferences("MyPref", Context.MODE_PRIVATE);
+        editor = pref.edit();
+
         tvRunSQL.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                hideKeyboardFrom(getContext(), etQuery);
                 selectQueryCalculation();
             }
         });
@@ -92,7 +103,8 @@ public class PlayFragment extends Fragment {
     private void setUI() {
         switch (requestCode) {
             case 2:
-                //populateWithTestData(AppDatabaseInstance.getAppDatabaseInstance(getContext()));
+                if (pref.getString("ShowData", "").equals(""))
+                    populateWithTestData(AppDatabaseInstance.getAppDatabaseInstance(getContext()));
                 etQuery.setText("SELECT * FROM Customers;");
                 String record = "Number of Records: " + AppDatabaseInstance.getAppDatabaseInstance(getContext()).customerDao().countCustomers();
                 tvNumberRecord.setText(record);
@@ -101,7 +113,7 @@ public class PlayFragment extends Fragment {
         }
     }
 
-    private void setAdapter(Boolean showStar, Boolean showID, Boolean showName, Boolean showCity, Boolean showCountry ) {
+    private void setAdapter(Boolean showStar, Boolean showID, Boolean showName, Boolean showCity, Boolean showCountry) {
         adapter = new TableAdapter(getContext(), customers, showStar, showID, showName, showCity, showCountry);
         rvTable.setHasFixedSize(true);
         RecyclerView.LayoutManager mLayoutManagerHome = new LinearLayoutManager(getContext(),
@@ -123,9 +135,12 @@ public class PlayFragment extends Fragment {
         Customer customer = new Customer("Haseeb", "Lahore", "Pakistan");
         Customer customer2 = new Customer("Moon", "Karachi", "Pakistan");
         Customer customer3 = new Customer("Haroon", "Multan", "Pakistan");
+        Customer customer4 = new Customer("Nabeel", "New York", "USA");
         addCustomer(db, customer);
         addCustomer(db, customer2);
         addCustomer(db, customer3);
+        addCustomer(db, customer4);
+        editor.putString("ShowData","data").commit();
     }
 
     private void selectQueryCalculation() {
@@ -251,6 +266,11 @@ public class PlayFragment extends Fragment {
                 })
                 .setCancelable(false)
                 .show();
+    }
+
+    public void hideKeyboardFrom(Context context, View view) {
+        InputMethodManager imm = (InputMethodManager) context.getSystemService(Activity.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 
     public PlayFragment newInstance(int requestCode) {
