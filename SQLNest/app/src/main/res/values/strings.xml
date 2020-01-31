@@ -12,5 +12,22 @@
     <string name="under_development">Under Development</string>
     <string name="db_operations">Database Operations</string>
     <string name="operations">Operations</string>
+    <string name="login">Login</string>
+    <string name="register">Register</string>
+    <string name="name">Name</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="re_enter_password">Confirm Password</string>
+    <string name="sign_in">Log In</string>
+    <string name="register_tv">Register?</string>
+    <string name="enter_name">Enter Name</string>
+    <string name="invalid_email">Invalid Email</string>
+    <string name="enter_password">Enter Password</string>
+    <string name="password_error_msg">Enter Minimum 6 Characters</string>
+    <string name="confirm_password">Re-Type Password</string>
+    <string name="match_error_msg">Password Does Not Match</string>
+    <string name="select_image">Select An Image</string>
+    <string name="wrong_password_msg">The password you entered is wrong</string>
+    <string name="email_error">You Have Entered Wrong Email</string>
 
 </resources>

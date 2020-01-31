@@ -68,22 +68,22 @@ public class OperationsFragment extends Fragment implements View.OnClickListener
         }
         ((MainActivity) getActivity()).toolbar.setVisibility(View.VISIBLE);
         ((MainActivity) getActivity()).tvToolbar.setText(getString(R.string.operations));
-        ((MainActivity) getActivity()).tvToolbar.setBackgroundColor(getResources().getColor(R.color.red));
+        ((MainActivity) getActivity()).rlToolbar.setBackgroundColor(getResources().getColor(R.color.red));
     }
 
     @Override
     public void onClick(View view) {
         if(view.getId() == R.id.tvInsert){
-            Toast.makeText(getContext(), "Under Development", Toast.LENGTH_SHORT).show();
+            callPlayFragment(1);
         }
         else if(view.getId() == R.id.tvSelect){
             callPlayFragment(2);
         }
         else if(view.getId() == R.id.tvUpdate){
-            Toast.makeText(getContext(), "Under Development", Toast.LENGTH_SHORT).show();
+            callPlayFragment(3);
         }
         else if(view.getId() == R.id.tvDelete){
-            Toast.makeText(getContext(), "Under Development", Toast.LENGTH_SHORT).show();
+            callPlayFragment(4);
         }
     }
 

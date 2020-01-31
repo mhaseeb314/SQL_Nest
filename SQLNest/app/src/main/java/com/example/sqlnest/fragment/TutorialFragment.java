@@ -103,7 +103,7 @@ public class TutorialFragment extends Fragment implements View.OnClickListener{
         }
         ((MainActivity) getActivity()).toolbar.setVisibility(View.VISIBLE);
         ((MainActivity) getActivity()).tvToolbar.setText(getString(R.string.tutorial));
-        ((MainActivity) getActivity()).tvToolbar.setBackgroundColor(getResources().getColor(R.color.blue));
+        ((MainActivity) getActivity()).rlToolbar.setBackgroundColor(getResources().getColor(R.color.blue));
     }
 
     @Override

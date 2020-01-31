@@ -6,31 +6,23 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
-import android.os.Build;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
-import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
-import android.widget.Switch;
-import android.widget.TableLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.sqlnest.R;
-import com.example.sqlnest.activity.MainActivity;
 import com.example.sqlnest.adapter.TableAdapter;
 import com.example.sqlnest.model.Customer;
 import com.example.sqlnest.utils.AppDatabaseInstance;
@@ -95,27 +87,54 @@ public class PlayFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 hideKeyboardFrom(getContext(), etQuery);
-                selectQueryCalculation();
+
+                switch (requestCode) {
+                    case 1:
+                        insertQueryCalculation();
+                        break;
+                    case 2:
+                        selectQueryCalculation();
+                        break;
+                    case 3:
+                        updateQueryCalculation();
+                        break;
+                    case 4:
+                        deleteQueryCalculation();
+                        break;
+                }
+
             }
         });
     }
 
     private void setUI() {
+        if (pref.getString("ShowData", "").equals(""))
+            populateWithTestData(AppDatabaseInstance.getAppDatabaseInstance(getContext()));
+        getAllCustomer(AppDatabaseInstance.getAppDatabaseInstance(getContext()));
+        String record = "Number of Records: " + AppDatabaseInstance.getAppDatabaseInstance(getContext()).customerDao().countCustomers();
+        tvNumberRecord.setText(record);
+
         switch (requestCode) {
-            case 2:
-                if (pref.getString("ShowData", "").equals(""))
-                    populateWithTestData(AppDatabaseInstance.getAppDatabaseInstance(getContext()));
-                etQuery.setText("SELECT * FROM Customers;");
-                String record = "Number of Records: " + AppDatabaseInstance.getAppDatabaseInstance(getContext()).customerDao().countCustomers();
-                tvNumberRecord.setText(record);
-                getAllCustomer(AppDatabaseInstance.getAppDatabaseInstance(getContext()));
+            case 1:
+                etQuery.setText("INSERT INTO Customers (name,city,country) VALUES (\'Ali\',\'Lahore\',\'Pakistan\');");
+
                 break;
+            case 2:
+                etQuery.setText("SELECT * FROM Customers;");
+
+                break;
+            case 3:
+                etQuery.setText("UPDATE Customers SET name=\'Ahmed\',city=\'Lahore\' WHERE name=\'Moon\';");
+
+                break;
+            case 4:
+                etQuery.setText("DELETE FROM Customers WHERE name='Haroon';");
         }
     }
 
     private void setAdapter(Boolean showStar, Boolean showID, Boolean showName, Boolean showCity, Boolean showCountry) {
         adapter = new TableAdapter(getContext(), customers, showStar, showID, showName, showCity, showCountry);
-        rvTable.setHasFixedSize(true);
+        rvTable.setHasFixedSize(false);
         RecyclerView.LayoutManager mLayoutManagerHome = new LinearLayoutManager(getContext(),
                 LinearLayoutManager.VERTICAL, false);
         rvTable.setLayoutManager(mLayoutManagerHome);
@@ -140,7 +159,7 @@ public class PlayFragment extends Fragment {
         addCustomer(db, customer2);
         addCustomer(db, customer3);
         addCustomer(db, customer4);
-        editor.putString("ShowData","data").commit();
+        editor.putString("ShowData", "data").commit();
     }
 
     private void selectQueryCalculation() {
@@ -180,8 +199,6 @@ public class PlayFragment extends Fragment {
                         break;
                     }
                 } else {
-                    Log.i("PlayFragment Star", strArray[i].toLowerCase().trim());
-                    Log.i("PlayFragment Star2", strArray[i].trim());
                     if (strArray[i].toLowerCase().trim().equals("*") || strArray[i].toLowerCase().trim().equals("id") || strArray[i].toLowerCase().trim().equals("name") ||
                             strArray[i].toLowerCase().trim().equals("city") || strArray[i].toLowerCase().trim().equals("country")) {
 
@@ -279,5 +296,515 @@ public class PlayFragment extends Fragment {
         bundle.putSerializable("requestCode", requestCode);
         fragment.setArguments(bundle);
         return fragment;
+    }
+
+    private void insertQueryCalculation() {
+        String queryStr = etQuery.getText().toString();
+//        queryStr = queryStr.replaceAll(",", "");
+        Log.i("PlayFragment", queryStr);
+
+        String strArray[] = queryStr.split(" ");
+
+        Boolean done = true;
+        String name = "";
+        String city = "";
+        String country = "";
+
+        if (strArray.length == 6) {
+
+            for (int i = 0; i < strArray.length; i++) {
+                if (i == 0) {
+                    if (!strArray[i].toLowerCase().trim().equals("insert")) {
+                        showAlertDialog(SYNTAX_ERROR);
+                        done = false;
+                        break;
+                    }
+                } else if (i == 1) {
+                    if (!strArray[i].toLowerCase().trim().equals("into")) {
+                        showAlertDialog(SYNTAX_ERROR);
+                        done = false;
+                        break;
+                    }
+                } else if (i == 2) {
+                    if (!strArray[i].toLowerCase().trim().equals("customers")) {
+                        showAlertDialog(SYNTAX_ERROR);
+                        done = false;
+                        break;
+                    }
+                } else if (i == 4) {
+                    if (!strArray[i].toLowerCase().trim().equals("values")) {
+                        showAlertDialog(SYNTAX_ERROR);
+                        done = false;
+                        break;
+                    }
+
+                } else {
+
+                    if (strArray[i].length() != 0 && strArray[i].toLowerCase().trim().charAt(0) == '(') {
+
+                        if (i == 3 && strArray[i].toLowerCase().trim().charAt(strArray[i].length() - 1) != ')') {
+                            showAlertDialog(SYNTAX_ERROR);
+                            done = false;
+                            break;
+                        } else if (i == 5
+                                && strArray[i].toLowerCase().trim().charAt(strArray[i].length() - 1) != ';'
+                                && strArray[i].toLowerCase().trim().charAt(strArray[i].length() - 2) != ')') {
+                            showAlertDialog(SYNTAX_ERROR);
+                            done = false;
+                            break;
+                        }
+                    } else {
+                        showAlertDialog(SYNTAX_ERROR);
+                        done = false;
+                        break;
+                    }
+
+                    String columnsString = strArray[3].trim().replaceAll("[()]", "");
+                    String columnNames[] = columnsString.split(",");
+
+                    String valuesString = strArray[5].trim().replaceAll("[()]", "");
+                    String values[] = valuesString.split(",");
+
+                    if (columnNames.length != values.length) {
+                        showAlertDialog(SYNTAX_ERROR);
+                        done = false;
+                        break;
+
+                    } else if (!checkForSingleInvertedComma(values)) {
+                        showAlertDialog(SYNTAX_ERROR);
+                        done = false;
+                        break;
+
+                    } else {
+
+                        for (int j = 0; j < columnNames.length; j++) {
+
+                            if (columnNames[j].length() != 0 &&
+                                    columnNames[j].trim().equalsIgnoreCase("name") ||
+                                    columnNames[j].trim().equalsIgnoreCase("city") ||
+                                    columnNames[j].trim().equalsIgnoreCase("country")) {
+
+                                if (columnNames[j].trim().equalsIgnoreCase("name")) {
+                                    name = values[j].replaceAll("[';]", "");
+                                } else if (columnNames[j].trim().equalsIgnoreCase("city")) {
+                                    city = values[j].replaceAll("[';]", "");
+                                    ;
+                                } else if (columnNames[j].trim().equalsIgnoreCase("country")) {
+                                    country = values[j].replaceAll("[';]", "");
+                                    ;
+                                } else {
+                                    showAlertDialog(SYNTAX_ERROR);
+                                    done = false;
+                                    break;
+                                }
+                            } else {
+                                showAlertDialog(SYNTAX_ERROR);
+                                done = false;
+                                break;
+                            }
+                        }
+                    }
+
+                }
+            }
+
+        } else {
+            showAlertDialog(SYNTAX_ERROR);
+            done = false;
+        }
+
+        if (done) {
+            Customer newCustomer = new Customer(name, city, country);
+            //add into dp
+            addCustomer(AppDatabaseInstance.getAppDatabaseInstance(getContext()),
+                    newCustomer);
+            updateUI("Customer inserted!");
+        }
+    }
+
+    private boolean checkForSingleInvertedComma(String[] values) {
+
+        if (values.length != 0) {
+
+            for (int i = 0; i < values.length; i++) {
+
+                if (values[i].length() != 0 && values[i].toLowerCase().trim().charAt(0) != '\''
+                        && values[i].toLowerCase().trim().charAt(values[i].length() - 1) != '\'') {
+                    return false;
+                }
+            }
+        } else {
+            return false;
+        }
+        return true;
+    }
+
+    private void deleteQueryCalculation() {
+        String queryStr = etQuery.getText().toString();
+//        queryStr = queryStr.replaceAll(",", "");
+        Log.i("PlayFragment", queryStr);
+
+        String strArray[] = queryStr.split(" ");
+
+        String name = "";
+        String city = "";
+        String country = "";
+        int id = 0;
+
+        if (strArray.length == 3) {
+
+            for (int i = 0; i < strArray.length; i++) {
+                if (i == 0) {
+                    if (!strArray[i].toLowerCase().trim().equals("delete")) {
+                        showAlertDialog(SYNTAX_ERROR);
+                        break;
+                    }
+                } else if (i == 1) {
+                    if (!strArray[i].toLowerCase().trim().equals("from")) {
+                        showAlertDialog(SYNTAX_ERROR);
+                        break;
+                    }
+                } else {
+                    if (!strArray[i].toLowerCase().trim().equals("customers;")) {
+                        showAlertDialog(SYNTAX_ERROR);
+                        break;
+                    } else {
+                        AppDatabaseInstance.getAppDatabaseInstance(getContext()).customerDao().deleteAllUsers();
+                        updateUI("All records deleted!");
+                        break;
+                    }
+                }
+
+            }
+        } else if (strArray.length == 5) {
+            for (int i = 0; i < strArray.length; i++) {
+                if (i == 0) {
+                    if (!strArray[i].toLowerCase().trim().equals("delete")) {
+                        showAlertDialog(SYNTAX_ERROR);
+                        break;
+                    }
+                } else if (i == 1) {
+                    if (!strArray[i].toLowerCase().trim().equals("from")) {
+                        showAlertDialog(SYNTAX_ERROR);
+                        break;
+                    }
+                } else if (i == 2) {
+                    if (!strArray[i].toLowerCase().trim().equals("customers")) {
+                        showAlertDialog(SYNTAX_ERROR);
+                        break;
+                    }
+                } else if (i == 3) {
+                    if (!strArray[i].toLowerCase().trim().equals("where")) {
+                        showAlertDialog(SYNTAX_ERROR);
+                        break;
+                    }
+                } else {
+
+                    String columnToDelete[] = strArray[i].trim().split("=");
+
+                    if (columnToDelete.length == 2)
+                        if (!columnToDelete[0].trim().equalsIgnoreCase("id") &&
+                                columnToDelete[1].length() >= 3 &&
+                                columnToDelete[1].charAt(0) != '\'' &&
+                                columnToDelete[1].charAt(columnToDelete[1].length() - 2) != '\'') {
+                            showAlertDialog(SYNTAX_ERROR);
+                            break;
+
+                        } else if (columnToDelete[0].length() != 0 && strArray[i].charAt(strArray[i].length() - 1) == ';' &&
+                                columnToDelete[0].trim().equalsIgnoreCase("name") ||
+                                columnToDelete[0].trim().equalsIgnoreCase("city") ||
+                                columnToDelete[0].trim().equalsIgnoreCase("country") ||
+                                columnToDelete[0].trim().equalsIgnoreCase("id")) {
+
+                            if (columnToDelete[0].trim().equalsIgnoreCase("name")) {
+                                name = columnToDelete[1].replaceAll("[';]", "");
+                                AppDatabaseInstance.getAppDatabaseInstance(getContext()).customerDao().deleteByName(name);
+                                updateUI("Deleted");
+                                break;
+                            } else if (columnToDelete[0].trim().equalsIgnoreCase("city")) {
+                                city = columnToDelete[1].replaceAll("[';]", "");
+                                AppDatabaseInstance.getAppDatabaseInstance(getContext()).customerDao().deleteByCity(city);
+                                updateUI("Deleted");
+                                break;
+                            } else if (columnToDelete[0].trim().equalsIgnoreCase("country")) {
+                                country = columnToDelete[1].replaceAll("[';]", "");
+                                AppDatabaseInstance.getAppDatabaseInstance(getContext()).customerDao().deleteByCountry(country);
+                                updateUI("Deleted");
+                                break;
+                            } else if (columnToDelete[0].trim().equalsIgnoreCase("id")) {
+
+                                if (columnToDelete[1].trim().contains("\'")) {
+                                    showAlertDialog(SYNTAX_ERROR);
+                                    break;
+                                } else {
+                                    id = Integer.parseInt(columnToDelete[1].trim().replaceAll("[;]", ""));
+                                    AppDatabaseInstance.getAppDatabaseInstance(getContext()).customerDao().deleteById(id);
+                                    updateUI("Deleted");
+                                    break;
+                                }
+
+                            } else {
+                                showAlertDialog(SYNTAX_ERROR);
+                                break;
+                            }
+
+                        } else {
+                            showAlertDialog(SYNTAX_ERROR);
+                            break;
+                        }
+                    else{
+                        showAlertDialog(SYNTAX_ERROR);
+                        break;
+                    }
+
+                }
+            }
+
+        } else {
+            showAlertDialog(SYNTAX_ERROR);
+        }
+    }
+
+    private void updateUI(String s) {
+        String record = "Number of Records: " + AppDatabaseInstance.getAppDatabaseInstance(getContext()).customerDao().countCustomers();
+        tvNumberRecord.setText(record);
+        getAllCustomer(AppDatabaseInstance.getAppDatabaseInstance(getContext()));
+        setAdapter(false, true, true, true, true);
+        Toast.makeText(getContext(), s, Toast.LENGTH_LONG).show();
+    }
+
+    private void updateQueryCalculation() {
+        String queryStr = etQuery.getText().toString();
+//        queryStr = queryStr.replaceAll(",", "");
+        Log.i("PlayFragment", queryStr);
+
+        String strArray[] = queryStr.split(" ");
+
+        boolean cityToUpdate = false;
+        boolean nameToUpdate = false;
+        boolean countryToUpdate = false;
+        String updatedName = "";
+        String updatedCity = "";
+        String updatedCountry = "";
+
+        if (strArray.length == 6) {
+
+            ArrayList<Customer> updatedCustomers = new ArrayList<Customer>();
+
+            for (int i = 0; i < strArray.length; i++) {
+                if (i == 0) {
+                    if (!strArray[i].toLowerCase().trim().equals("update")) {
+                        showAlertDialog(SYNTAX_ERROR);
+                        break;
+                    }
+                } else if (i == 1) {
+                    if (!strArray[i].toLowerCase().trim().equals("customers")) {
+                        showAlertDialog(SYNTAX_ERROR);
+                        break;
+                    }
+                } else if (i == 2) {
+                    if (!strArray[i].toLowerCase().trim().equals("set")) {
+                        showAlertDialog(SYNTAX_ERROR);
+                        break;
+                    }
+                } else if (i == 4) {
+                    if (!strArray[i].toLowerCase().trim().equals("where")) {
+                        showAlertDialog(SYNTAX_ERROR);
+                        break;
+                    }
+
+                } else {
+
+                    String columnToUpdate[] = strArray[3].trim().split(",");
+                    String rowToUpdate[] = strArray[5].trim().split("=");
+
+                    for (String s : columnToUpdate) {
+                        if (!s.equals("") &&
+                                (s.trim().split("=")[0].equalsIgnoreCase("name") &&
+                                        checkForSingleInvertedComma(new String[]{s.trim().split("=")[1]})) ||
+
+                                (s.trim().split("=")[0].equalsIgnoreCase("city") &&
+                                        checkForSingleInvertedComma(new String[]{s.trim().split("=")[1]})) ||
+
+                                (s.trim().split("=")[0].equalsIgnoreCase("country") &&
+                                        checkForSingleInvertedComma(new String[]{s.trim().split("=")[1]}))) {
+
+                            if (s.trim().split("=")[0].equalsIgnoreCase("name")) {
+                                nameToUpdate = true;
+                                updatedName = s.trim().split("=")[1]
+                                        .replaceAll("[']", "");
+                            } else if (s.trim().split("=")[0].equalsIgnoreCase("city")) {
+                                cityToUpdate = true;
+                                updatedCity = s.trim().split("=")[1]
+                                        .replaceAll("[']", "");
+                            } else if (s.trim().split("=")[0].equalsIgnoreCase("country")) {
+                                countryToUpdate = true;
+                                updatedCountry = s.trim().split("=")[1]
+                                        .replaceAll("[']", "");
+                            } else {
+                                showAlertDialog(SYNTAX_ERROR);
+                                return;
+                            }
+
+                        } else {
+                            showAlertDialog(SYNTAX_ERROR);
+                            return;
+                        }
+                    }
+
+                    if (i == 5) {
+                        if (!rowToUpdate[0].trim().equalsIgnoreCase("id") &&
+                                rowToUpdate[1].charAt(0) != '\'' &&
+                                rowToUpdate[1].charAt(rowToUpdate[1].length() - 2) != '\'') {
+                            showAlertDialog(SYNTAX_ERROR);
+                            return;
+
+                        } else if (rowToUpdate[0].length() != 0 && strArray[i].charAt(strArray[i].length() - 1) == ';' &&
+                                rowToUpdate[0].trim().equalsIgnoreCase("name") ||
+                                rowToUpdate[0].trim().equalsIgnoreCase("city") ||
+                                rowToUpdate[0].trim().equalsIgnoreCase("country") ||
+                                rowToUpdate[0].trim().equalsIgnoreCase("id")) {
+
+                            if (rowToUpdate[0].trim().equalsIgnoreCase("name")) {
+                                updatedCustomers = (ArrayList<Customer>) AppDatabaseInstance
+                                        .getAppDatabaseInstance(getContext())
+                                        .customerDao()
+                                        .getCustomerByName(rowToUpdate[1]
+                                                .replaceAll("[';]", ""));
+
+                            } else if (rowToUpdate[0].trim().equalsIgnoreCase("city")) {
+                                updatedCustomers = (ArrayList<Customer>) AppDatabaseInstance
+                                        .getAppDatabaseInstance(getContext())
+                                        .customerDao()
+                                        .getCustomerByCity(rowToUpdate[1]
+                                                .replaceAll("[';]", ""));
+
+                            } else if (rowToUpdate[0].trim().equalsIgnoreCase("country")) {
+                                updatedCustomers = (ArrayList<Customer>) AppDatabaseInstance
+                                        .getAppDatabaseInstance(getContext())
+                                        .customerDao()
+                                        .getCustomerByCountry(rowToUpdate[1]
+                                                .replaceAll("[';]", ""));
+
+                            } else if (rowToUpdate[0].trim().equalsIgnoreCase("id")) {
+                                updatedCustomers = (ArrayList<Customer>) AppDatabaseInstance
+                                        .getAppDatabaseInstance(getContext())
+                                        .customerDao()
+                                        .getCustomerById(Integer.parseInt(rowToUpdate[1]
+                                                .replaceAll("[;]", "")));
+
+                            } else {
+                                showAlertDialog(SYNTAX_ERROR);
+                                return;
+                            }
+
+                        } else {
+                            showAlertDialog(SYNTAX_ERROR);
+                            return;
+                        }
+
+                        updateColumnAccordingly(
+                                AppDatabaseInstance.getAppDatabaseInstance(getContext()),
+                                nameToUpdate,
+                                cityToUpdate,
+                                countryToUpdate,
+                                updatedCustomers,
+                                new String[]{updatedName,
+                                        updatedCity,
+                                        updatedCountry});
+                    }
+
+                }
+            }
+
+        } else if (strArray.length == 4) {
+
+            String columnToUpdate[] = strArray[3].trim().split(",");
+
+            if (columnToUpdate[columnToUpdate.length - 1]
+                    .charAt(columnToUpdate[columnToUpdate.length - 1].length() - 1) == ';') {
+
+                for (String s : columnToUpdate) {
+                    if (!s.equals("") &&
+                            (s.trim().split("=")[0].equalsIgnoreCase("name") &&
+                                    checkForSingleInvertedComma(new String[]{s.trim().split("=")[1]})) ||
+
+                            (s.trim().split("=")[0].equalsIgnoreCase("city") &&
+                                    checkForSingleInvertedComma(new String[]{s.trim().split("=")[1]})) ||
+
+                            (s.trim().split("=")[0].equalsIgnoreCase("country") &&
+                                    checkForSingleInvertedComma(new String[]{s.trim().split("=")[1]}))) {
+
+                        if (s.trim().split("=")[0].equalsIgnoreCase("name")) {
+                            AppDatabaseInstance
+                                    .getAppDatabaseInstance(getContext())
+                                    .customerDao()
+                                    .updateAllNames(
+                                            s.trim().split("=")[1]
+                                                    .replaceAll("[';]", ""));
+                            updateUI("All records updated!");
+                        } else if (s.trim().split("=")[0].equalsIgnoreCase("city")) {
+                            AppDatabaseInstance
+                                    .getAppDatabaseInstance(getContext())
+                                    .customerDao()
+                                    .updateAllCity(
+                                            s.trim().split("=")[1]
+                                                    .replaceAll("[';]", ""));
+                            updateUI("All records updated!");
+                        } else if (s.trim().split("=")[0].equalsIgnoreCase("country")) {
+                            AppDatabaseInstance
+                                    .getAppDatabaseInstance(getContext())
+                                    .customerDao()
+                                    .updateAllCountry(
+                                            s.trim().split("=")[1]
+                                                    .replaceAll("[';]", ""));
+                            updateUI("All records updated!");
+                        } else {
+                            showAlertDialog(SYNTAX_ERROR);
+                            return;
+                        }
+
+                    } else {
+                        showAlertDialog(SYNTAX_ERROR);
+                        return;
+                    }
+                }
+
+            } else {
+                showAlertDialog(SYNTAX_ERROR);
+                return;
+            }
+
+        } else {
+            showAlertDialog(SYNTAX_ERROR);
+        }
+
+    }
+
+    private void updateColumnAccordingly(
+            AppDatabaseInstance db,
+            Boolean name,
+            Boolean city,
+            Boolean country,
+            ArrayList<Customer> customerToUpdate,
+            String columnValues[]) {
+
+        for (int i = 0; i < customerToUpdate.size(); i++) {
+
+            if (name) {
+                customerToUpdate.get(i).setName(columnValues[0]);
+            }
+            if (city) {
+                customerToUpdate.get(i).setCity(columnValues[1]);
+            }
+            if (country) {
+                customerToUpdate.get(i).setCountry(columnValues[2]);
+            }
+
+            addCustomer(db, customerToUpdate.get(i));
+        }
+
+        updateUI("Record/s Updated!");
+
     }
 }

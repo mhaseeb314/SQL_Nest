@@ -2,6 +2,7 @@ package com.example.sqlnest.model;
 
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 @Entity(tableName = "customers")//for making table
@@ -15,6 +16,10 @@ public class Customer {
     private String city = "";
     @ColumnInfo(name = "country")
     private String country = "";
+
+    @Ignore
+    public Customer() {
+    }
 
     public Customer(String name, String city, String country) {
         this.name = name;

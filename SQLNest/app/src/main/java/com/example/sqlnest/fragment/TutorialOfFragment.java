@@ -123,7 +123,7 @@ public class TutorialOfFragment extends Fragment {
                     window.setStatusBarColor(ContextCompat.getColor(getActivity(),R.color.pink));
                 }
                 ((MainActivity) getActivity()).tvToolbar.setText(getString(R.string.ddl));
-                ((MainActivity) getActivity()).tvToolbar.setBackgroundColor(getResources().getColor(R.color.pink));
+                ((MainActivity) getActivity()).rlToolbar.setBackgroundColor(getResources().getColor(R.color.pink));
             }
             break;
             case 1: {
@@ -131,7 +131,7 @@ public class TutorialOfFragment extends Fragment {
                     window.setStatusBarColor(ContextCompat.getColor(getActivity(),R.color.pulm));
                 }
                 ((MainActivity) getActivity()).tvToolbar.setText(getString(R.string.dml));
-                ((MainActivity) getActivity()).tvToolbar.setBackgroundColor(getResources().getColor(R.color.pulm));
+                ((MainActivity) getActivity()).rlToolbar.setBackgroundColor(getResources().getColor(R.color.pulm));
             }
             break;
             case 2: {
@@ -140,7 +140,7 @@ public class TutorialOfFragment extends Fragment {
                     window.setStatusBarColor(ContextCompat.getColor(getActivity(),R.color.seaGreen));
                 }
                 ((MainActivity) getActivity()).tvToolbar.setText(getString(R.string.af));
-                ((MainActivity) getActivity()).tvToolbar.setBackgroundColor(getResources().getColor(R.color.seaGreen));
+                ((MainActivity) getActivity()).rlToolbar.setBackgroundColor(getResources().getColor(R.color.seaGreen));
             }
             break;
             case 3: {
@@ -149,7 +149,7 @@ public class TutorialOfFragment extends Fragment {
                     window.setStatusBarColor(ContextCompat.getColor(getActivity(),R.color.peach));
                 }
                 ((MainActivity) getActivity()).tvToolbar.setText(getString(R.string.acf));
-                ((MainActivity) getActivity()).tvToolbar.setBackgroundColor(getResources().getColor(R.color.peach));
+                ((MainActivity) getActivity()).rlToolbar.setBackgroundColor(getResources().getColor(R.color.peach));
             }
         }
 

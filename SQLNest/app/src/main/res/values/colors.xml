@@ -22,5 +22,5 @@
     <color name="black">#000000</color>
     <color name="gray">#DFDFDF</color>
 
-
+    <color name="font">#333333</color>
 </resources>

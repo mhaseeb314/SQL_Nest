@@ -6,22 +6,26 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <LinearLayout
+    <RelativeLayout
+        android:id="@+id/rlToolbar"
         android:layout_width="match_parent"
-        android:layout_height="?actionBarSize">
+        android:layout_height="?actionBarSize"
+        android:background="@color/blue">
 
         <TextView
             android:id="@+id/tvToolbar"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:background="@color/blue"
-            android:gravity="center_horizontal|center_vertical"
+            android:layout_centerHorizontal="true"
             android:text="Toolbar"
             style="?actionBarTabTextStyle"
             android:textSize="20dp"
             android:textColor="@color/colorWhite"
             android:textStyle="bold"
+            android:visibility="visible"
+            android:gravity="center"
             />
-    </LinearLayout>
+
+    </RelativeLayout>
 
 </LinearLayout>
